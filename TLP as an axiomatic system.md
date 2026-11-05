@@ -65,7 +65,7 @@ Sources are given in parentheses.¹⁰ "Completely general" means name-free; "si
 
 [1] The *Least Inconsistent* criterion (*LI*). Under their original readings [Witt1922d, Witt1922e] the 526 propositions are jointly inconsistent. A formalization seeks admissible readings under which they are consistent. Options are compared by violations (propositions left out), then by restrictions (narrower readings the wording admits). Marks are compared first by kind and then by level; at the first difference, the option with fewer marks wins.
 
-- Kinds: definition (a unit with "heisst", "nenne ich", "Def.", "das heisst", "besteht darin, dass", or "X ist das, was ..." with X not fixed before) > limit (something cannot be said, expressed, asserted, thought or asked, or is nonsense) > assertion > notation and remark.
+- Kinds: definition (a unit with "heisst", "nenne ich", "Def.", "das heisst", "besteht darin, dass", or "X ist das, was ..." with X not fixed before) > limit (something cannot be said, expressed, asserted, thought or asked, or is nonsense) > assertion > notation and remark. This ordering is an interpretive commitment of *LI*, not a consequence of the *Tractatus*.
 - A mark is weighted by the unit it narrows (sentence, gloss, parenthesis), once per proposition.
 - Level: digits after the point; the figures "indicate the logical importance" (note to 1).
 - Witnesses: the reading preferred by *LI* among those the printings admit.
