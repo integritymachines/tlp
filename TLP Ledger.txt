@@ -3,7 +3,7 @@ TLP Ledger
 > Current audit status — 31 October 2026, Y register: X52's printed width/profile argument has a counterexample. Y14 accepts the corrected revision-58 A11 proof; Y15 accepts the remaining axioms and actual-world construction in mathematical self-audit. E32 model existence is closed using this corrected proof package; no external independent certificate is claimed. E33 and independence/minimality remain separate. The Y register at the end supersedes historical certification status statements below; X decisions and axioms are retained for audit. Proofs and verification material are incorporated in the consolidated proof record [section consolidated-proof]; its source-line map preserves the original citations. The paper’s former Appendices B–D are retained in the transferred technical appendices [section transferred-appendices] under Y17’s 6,000-word allocation. X54–X57 (November 2026) prove independence of all thirteen axioms (A17, E33, by X57): TLP is minimal under the countermodel standard.
 
 
-The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X61 and audit Y0–Y17 · 526 proposition tags
+The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X62 and audit Y0–Y17 · 526 proposition tags
 
 Entrypoint [section s-entrypoint]Final form [section s-final-form]Principle [section s-principle]LI resolution [section s-li-resolution]Restrictions [section s-restrictions]Decisions [section s-decisions]High alert [section s-high-alert]Orders [section s-orders]Earmarks [section s-earmarks]Revisions [section s-revisions]Signature [section s-signature]Core axioms [section s-core-axioms]Derivations [section s-derivations]R3 results [section s-r3-results]R3b Results [section s-r3b-results]Formal notes [section s-formal-notes]Notes [section s-notes]Entrypoint record [section s-entrypoint-record]Proposition tags [section s-proposition-tags]
 
@@ -14031,3 +14031,10 @@ Two cold reads of the full paper (an internal one, verdict NOT READY, and an out
 - Appendix E (step 4): the concordance of all 526 propositions, from the rev. 58 tags, normalized (retired axiom numbers replaced by their derivations; revision history removed; 24 entries rewritten by hand where they cited retired items). The tags are removed from this ledger.
 - Notes: 5.24 gets note 42; Judgments become note 43. Table 4.243 corrected to 4.24. Premise roles of S3 (D2, D-S4, D21) and of A6a, A4, A8 (D10) stated. Ledger leftovers removed or defined. Side claims of notes 3, 5, 8 and 9 marked as recorded in the ledger. Note 1: the LI kind ordering is an interpretive commitment.
 Held for the user: A6a's argument (membership in 𝔸 versus obtaining; outside read), the LI comparison as an explicit tuple (finding 22), the rename of D-S4, and the uncited [Witt1973]. Next: adversarial verification of Appendix C (held before review).
+
+X62 — The user's four items (6 November 2026; the user's decisions)
+
+- A6a's argument (note 16): membership in 𝔸, not obtaining. By 2.06 a non-obtaining state is a negative fact; a picture's sense reads the depicted values from its tokens' values, so obtaining tokens would leave A7 without pictures of situations with a non-obtaining state.
+- LI comparison (note 1) stated as a lexicographic pair (V, R) of mark counts per key (kind, level), V first; a mark counts once per proposition at the kind of the heaviest unit narrowed and at the proposition's level (PRINCIPLE).
+- D-S4 renamed D20s, with a note: the free number 20 (D20 withdrawn, X42).
+- [Witt1973] dropped from the bibliography (cited nowhere).

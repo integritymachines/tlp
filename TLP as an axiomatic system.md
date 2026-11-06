@@ -72,7 +72,7 @@ Sources are given in parentheses.¹⁰ "Completely general" means name-free. "Si
 - **A17** Any two worlds with the same completely general truths are isomorphic. (5.5262, sentence 2)²⁸
 - **A18** If χ\* is the actual world, then for every proposition p, every minimal alteration of χ\* that changes p's truth value changes the completely general truths. (5.5262, sentence 1)²⁹
 - **A19** In some world, there are distinct objects o, o′ that agree in sense and truth for every name-free formula Ψ(x). (5.5302)³⁰
-- **D-S4** Every state of affairs is finite. ← A11, A7, S3 (4.2211, 4.04)³¹
+- **D20s** Every state of affairs is finite. ← A11, A7, S3 (4.2211, 4.04)³¹
 - **D21** Every nonempty multiplicity class of 𝔸 is infinite. ← A7, A6s, A6a, S3, D2 (3.13, 4.463)³²
 
 ### Restricted propositions
@@ -94,10 +94,10 @@ The outcome rests on the interpretive judgments of note 43.⁴³
 
 ## Notes
 
-[1] The *Least Inconsistent* criterion (*LI*). Under their original readings [Witt1922d, Witt1922e] the 526 propositions are jointly inconsistent. A formalization seeks admissible readings under which they are consistent. Options are compared by violations (propositions left out), then by restrictions (narrower readings the wording admits). Marks are compared first by kind and then by level; at the first difference, the option with fewer marks wins.
+[1] The *Least Inconsistent* criterion (*LI*). Under their original readings [Witt1922d, Witt1922e] the 526 propositions are jointly inconsistent. A formalization seeks admissible readings under which they are consistent. Options are compared by violations (propositions left out), then by restrictions (narrower readings the wording admits). Formally, an option's cost is a pair (V, R). V and R count violation and restriction marks per key (k, ℓ), where k is the kind (1 = definition to 4 = notation and remark) and ℓ = 0, 1, 2, … the level. Keys are ordered (1, 0) < (1, 1) < … < (2, 0) < … . Costs are compared lexicographically: V first, key by key in that order, then R the same way. The first difference decides, and fewer marks win. Marks are compared first by kind and then by level; at the first difference, the option with fewer marks wins.
 
 - Kinds: definition (a unit with "heisst", "nenne ich", "Def.", "das heisst", "besteht darin, dass", or "X ist das, was ..." with X not fixed before) > limit (something cannot be said, expressed, asserted, thought or asked, or is nonsense) > assertion > notation and remark. This ordering is an interpretive commitment of *LI*, not a consequence of the *Tractatus*.
-- A mark is weighted by the unit it narrows (sentence, gloss, parenthesis), once per proposition.
+- A mark counts once per proposition. Its kind is that of the heaviest unit (sentence, gloss or parenthesis) whose content the reading narrows; its level is the proposition's. An axiom or commitment takes the shallowest level of its sources.
 - Level: digits after the point; the figures "indicate the logical importance" (note to 1).
 - Witnesses: the reading preferred by *LI* among those the printings admit.
 - Ties (*LI+*): fewer commitments without textual source; fewer axioms; better witness alignment; the 1922 printing.
@@ -130,7 +130,7 @@ The outcome rests on the interpretive judgments of note 43.⁴³
 
 [15] 2.04: "Die Gesamtheit der bestehenden Sachverhalte ist die Welt."
 
-[16] 2.141: "Das Bild ist eine Tatsache"; 3.14: "Das Satzzeichen ist eine Tatsache."
+[16] 2.141: "Das Bild ist eine Tatsache"; 3.14: "Das Satzzeichen ist eine Tatsache." A6a asks that the medium's states belong to 𝔸, not that they obtain. By 2.06, the non-obtaining of a state of affairs is a negative fact, so a medium state is a fact of the world whether or not it obtains. And a picture's sense reads the depicted values from its tokens' values (σ_{P,χ}). If every medium state had to obtain, every picture would depict only obtaining states, and A7 would fail for every situation with a non-obtaining state.
 
 [17] 3.13: "aber nicht das Projizierte. Also die Möglichkeit des Projizierten, aber nicht dieses selbst." Hereditary, since parts of pictures are pictures (2.1513; X42); for finite D, r has no cycle. The rival system K, in which s := (∃φ)(∃x, y)φ(x, y) and p ∨ s lack sense, restricts 4.5(iii) (definition, level 1); *TLP*, on which they have sense, restricts 2.173 and 2.224 (assertion, level 3) (X41, X46). 3.332 gives containment by its reason clause, not by the support condition of the retired axiom A6d (3.24, 3.333; X40). Hereditary: A6s binds the projection of every part of a sign, including each named instance checked under C-nv.
 
@@ -160,7 +160,7 @@ The outcome rests on the interpretive judgments of note 43.⁴³
 
 [30] 5.5302: "(Selbst wenn dieser Satz nie richtig ist, hat er doch Sinn.)" Indiscernible by name-free formulas, not conjugate by automorphisms (4.122, 4.1241, 4.126; X34). Never at χ\*, by A16. Cf. [Weis2017].
 
-[31] Finite signs (A11) depict each state with its multiplicity (A7; 4.04): the projection, which ρ and τ induce (S3), maps the token state's slots bijectively onto the depicted state's, so the latter is finite. D-S4 derives the finiteness that a former commitment stipulated (note 3).
+[31] Finite signs (A11) depict each state with its multiplicity (A7; 4.04): the projection, which ρ and τ induce (S3), maps the token state's slots bijectively onto the depicted state's, so the latter is finite. D20s takes the free number 20 (the earlier D20 was withdrawn, X42); it derives the finiteness of states that a former commitment stipulated (note 3).
 
 [32] For a finite class K, A7 for "all of K true" needs r(D) = K with D ⊆ K (A6a; r, induced by ρ and τ (S3), preserves multiplicity and is injective, D2), so r(D) = D, against A6s. Lokhorst stipulates infinitely many states [Lok1988].
 
@@ -1195,7 +1195,7 @@ The readings follow the ledger's proposition tags, normalized to this paper's nu
 - **4.211** · THM · no elementary proposition contradicts another (fails under color exclusion, C nonempty)  ← A4, 4.21
 - **4.22** · DEF · elementary proposition = concatenation of names: a slot map (S4; 3.14), with at least two names of distinct objects (A14)
 - **4.221** · THM · analysis ends in elementary propositions. The unity question ("how the propositional connexion comes to be") is answered by S4: no glue (2.03)  ← 3.2, 3.25
-- **4.2211** · THM · substance does not depend on finite analysis: O and 𝔸 nonempty even if facts and states of affairs are infinitely complex. D-S4's finiteness excludes the second hypothesis  ← D1, D3
+- **4.2211** · THM · substance does not depend on finite analysis: O and 𝔸 nonempty even if facts and states of affairs are infinitely complex. D20s's finiteness excludes the second hypothesis  ← D1, D3
 - **4.23** · THM · names occur only in elementary propositions  ← 3.3, 4.221
 - **4.24** · NOT · R · names x, y, z; elementary propositions fx, phi(x, y); p, q, r. RESTRICTED: "fx" is schematic notation, not a claim that single-object elementary propositions exist (A14; 5.554)
 - **4.241** · DEF · a = b := sign a is replaceable by sign b (a rule about signs; a = b Def.). A defined sign and its definiens share fit and sense
@@ -1507,4 +1507,3 @@ The readings follow the ledger's proposition tags, normalized to this paper's nu
 - [Witt1922pg] Wittgenstein, L. *Tractatus Logico-Philosophicus*, Project Gutenberg EBook 5740: Distributed Proofreaders' transcription of the 1922 printing, German and English, with page scans.
 - [Witt1933] Wittgenstein, L. *Tractatus Logico-Philosophicus*. Reprint with corrections. London: Kegan Paul, 1933.
 - [Witt1961] Wittgenstein, L. *Tractatus Logico-Philosophicus*. Trans. D. F. Pears and B. F. McGuinness. London: Routledge & Kegan Paul, 1961 (1963 impression).
-- [Witt1973] Wittgenstein, L. *Letters to C. K. Ogden*. Ed. G. H. von Wright. Oxford: Blackwell; London: Routledge & Kegan Paul, 1973.
