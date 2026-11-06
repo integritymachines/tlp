@@ -708,6 +708,15 @@ Every augmented live bag in any legal finite unfolding has size at most Q, count
 
 A checked named instance promotes at most Q active free identities to names. Its own name set, original names, live boundary and auxiliary boundary-role charts fit within 3Q+n identities, below b. This does not count every ancestor binder as a new permanent reservation. The budget bounds local interfaces, not total syntax size, binder count or generated nesting depth.
 
+**Budget invariant.** At every node u of every legal finite unfolding, and at every named instance checked at u, at most 3Q + n < b identities are in play:
+
+- the live bag of u (its free letters and names): at most Q, by the bound above;
+- the parameter names that the current check promotes: at most Q, one per active free identity;
+- the auxiliary boundary roles of the composite being formed: at most Q, one per live identity of the receiving node;
+- the original names: n.
+
+The induction above proves it. Substitution, binding and normalization each map these sets into the corresponding sets of the receiving node, and promotion replaces a live identity by a parameter name without adding one.
+
 ### C.4 Finite fitting relations
 
 Let Ω be the uncoloured version of the frame with infinitely many units and infinitely many markers in each. Let H_b have b units and b markers per unit, with the same hubs and R incidences. Φ embeds in Ω. Conversely every finite positive incidence-and-inequality witness in Ω transports to distinct sufficiently large Φ units. Thus they agree on existential whole-sign fitting.
@@ -715,6 +724,20 @@ Let Ω be the uncoloured version of the frame with infinitely many units and inf
 Selected tuples of at most b identities in Ω and H_b are matched by exact hubs, object/form roles, touched-unit partition, and marker equality. With fewer than b identities retained, a new unit or a new marker in a touched unit always has a mate; the leaf and R-form of a touched unit have unique corresponding mates. This is a back-and-forth extension property for incidence and equality.
 
 The lexical constraints form a tree recursion with the live boundary and all reserved names in each bag. An atom tests incidence; a finite N-node combines its child relations at the same boundary assignment; a binder existentially extends by a token satisfying the exclusions. Internal siblings are independent only after that common boundary is fixed. Induction through this recursion transfers acceptance exactly between Ω and H_b. It preserves repeated atoms and shared tokens, rather than reducing them to atom counts. Additional propositional-letter states are chosen afterwards on fresh units; their unbounded possible number is not forced into H_b.
+
+**Lemma (fitting exposure).** At every node u, whether the written subexpression at u fits under a placement depends only on three things:
+
+- the placement's restriction to u's live boundary;
+- the set of same-sort name tokens that the checked sign reserves;
+- the subexpression itself.
+
+Proof, by induction on u:
+
+- An atom's token state is fixed by the tokens of its letters, each on the boundary or bound inside u. Repeated letters share tokens, so repeated atoms share token states.
+- A binder's exclusion involves only the same-sort free letters of its body, which lie on the body's boundary, and the reserved name tokens.
+- An N-node adds no constraint beyond its children's at the same boundary.
+
+The boundary and the reservations together hold fewer than b identities (C.3). So the acceptance relation at u is a finite relation on H_b placements, and the back-and-forth property transfers it exactly between Ω and H_b.
 
 These tables describe unanchored existential fitting. They do not assert equivalence when a token is externally fixed to a small-capacity Φ unit. Semantic names do not impose such pinning.
 
@@ -748,15 +771,63 @@ with the necessary finite port reindexing. Do not discard the entire array becau
 
 There is no field deciding whether infinitely many future transformations will be defined. Complete elementary operations deterministically on all finite records, assigning arbitrary fixed results to locally detected failures. No semantic correctness is claimed for unsafe entries or records without legal representatives.
 
-### C.7 Descriptor calculation and safe observations
+### C.7 Safe observations and the preservation theorem
 
-Call an observation safe when the directly transformed expression, including any named-instance equality pattern, is map-admissible. Safety is a proof predicate, not a computed oracle. A safe output observation of a legal composite asks only for safe filler observations: a mapped request is the corresponding transformed component of that composite. Actual parameter instances passing N+ are injective on their co-occurring interface and avoid the relevant existing names, so they preserve closure, normalization and map admissibility after freshening. Noninjective series maps are justified instead by the admitted G\* promise.
+**Observations.** An observation index ω of an expression T fixes four things:
 
-A separate finite written-descriptor procedure computes occurrence sets, closures, vacuity and fitting. Own holes supply their full H1 word images and propositional state slots, not an invented term value. Enclosing holes contribute their actual finite occurrence records. Recompute receiving closures from these generators, processing inner descriptors first; then normalize. This consists of finite unions, map images, least closures, equality tests and the ordinary fitting operations.
+- an external word map ρ_ω on T's live boundary, identifications included;
+- an ambient reservation pattern;
+- for a semantic entry, an equality pattern with parameter names, together with a realizable profile P and a tuple of M_P;
+- for a token entry, a placement in H_b.
 
-For an existing copied descriptor, legal closure transport is exact. If rho f = f_bar rho on the relevant map domains, every finite path from a generator maps to a quotient path, and every quotient path lifts step by step from a chosen reached preimage. Thus rho(Cl_f(S)) = Cl_fbar(rho(S)). Hygiene prevents a private terminal target from being merged with an external source. Duplicate external entries can disappear, but surviving private binder occurrences cannot disappear by external renaming. Newly receiving descriptors must nevertheless recompute their own generators; they are not treated as unchanged copies.
+Obs(T)[ω] is the corresponding C.6 entry of the transformed expression ρ_ω(T), named instance included, computed in the reference semantics. ω is *safe* for T when ρ_ω(T), with its instance's equality pattern, is map-admissible. A record k is *correct* for T when k[ω] = Obs(T)[ω] for every safe ω. Safety is a proof predicate, not a computed classification: entries at unsafe indices may hold arbitrary deterministic values.
 
-These facts prove the safe dependency invariant for descriptor construction as well as ordinary syntax. An undefined map cannot be executed and then repaired by arbitrary image selection. Display-only placeholders never become semantic fillers, and individual alternative rows are never passed as if they were complete semantic records.
+**Theorem (preservation).** Let E be a written G\* expression with propositional holes x_1, …, x_r, and let T_1, …, T_r be map-admissible fillers. Suppose the normalized composite E[T̄] is map-admissible. If each k_i is correct for T_i, then Compile(E, [x_i ↦ k_i]) is correct for E[T̄].
+
+**Three facts.**
+
+- **(F1) Components.** A subexpression retained in a map-admissible expression is map-admissible. Normalization deletes only idle units and vacuous binders and never moves a retained scope. So each retained subtree of E[T̄] is the corresponding subtree of E with its fillers substituted.
+- **(F2) Commutation.** If μ(T) and ρ(μ(T)) are map-admissible, then ρ(μ(T)) is the direct transform (ρ∘μ)(T), up to hygienic renaming, and normalization commutes with the transformation. So ρ∘μ is safe for T. Legal closure transport (case 5) supplies the closure part.
+- **(F3) Instances.** A candidate d admitted by N+ differs from the names and from the other free parameter values of its scope. So the named instance B[d] is injective on its co-occurring interface and merges no exposed sources. Instantiation therefore commutes with the legal substitutions, and B[d] is map-admissible whenever B is.
+
+**Proof.** By induction on the written size of E, with cases by the outermost constructor. The normalization steps are absorbed where they arise.
+
+1. **Atom** f(t̄). There are no fillers. Every entry is read from the incidence and truth tables (C.4, C.5), so the record is exact at every index.
+2. **Mapped hole** x_j under μ_j. Compile returns A_{μ_j}(k_j), whose entry at ω is k_j[ω∘μ_j] (C.6). Let ω be safe for μ_j(T_j). μ_j(T_j) is retained in the legal composite, so it is map-admissible (F1). By (F2), ω∘μ_j is safe for T_j, and correctness of k_j gives the value.
+   - **Repeated holes with different maps.** Each occurrence reads its own row ω∘μ_j of the same record, and the enclosing constructor combines them. The maps need no relation to each other beyond the legality of each retained copy, which (F1) gives.
+   - **Non-injective maps.** Suppose μ_j identifies two closure sources. If their images are incompatible, the step is undefined in G\* and the composite is not legal, so the hypothesis excludes it. If they are compatible, ω∘μ_j is an index with an identification pattern. Records carry every identification pattern of their boundary (C.6), and the identified row is safe by (F2). A failed identity row of k_j is never consulted for the composite and cannot erase a defined composite row (C.6).
+3. **N over a finite list** (E_1, …, E_m).
+   - Occurrence sets are unions.
+   - Sense requires every component's sense, and truth is joint negation.
+   - Fitting composes the components' acceptance relations at the same boundary assignment (C.4).
+
+   A safe index of the composite restricts to a safe index of each component (F1), and the induction hypothesis gives each component's entry.
+4. **N over an abstraction** z.B.
+   - **Token side.** The binder extends each boundary placement in H_b by a token for z. The token must avoid the same-sort free letters of B and every same-sort name token (M+). This uses only boundary data and the reservation pattern (C.4).
+   - **Semantic side.** Each candidate d in M_P that passes N+ is read in the body at the index ω extended by z ↦ a parameter name for d. That index is safe by (F3), and the induction hypothesis gives B[d]'s own sense and truth. The value is true iff every admitted instance is false.
+   - **A hole under a binder that binds an exposed letter.** Suppose a hole inside B has a map sending an exposed letter v to z, so z ∈ bnd(j). At the binder, z is a local boundary role, and each semantic candidate instantiates it. The filler is read at the index sending v to the candidate's name; this combines cases 2 and 4. The filler's record already holds that row, because records range over every external map of their boundary (C.6).
+   - **Newly vacuous abstraction.** Whether z still occurs in B after substitution is read from the row's exact occurrence sets (C.6, item 1). If z does not occur, normalization replaces N over z.B by N(B) (C.1), and the compiler applies the same rule at that row. The retained B is the same subtree (F1), so its entries are B's.
+5. **Series descriptor** [B, x, C]. This case has two separate computations.
+   - **Written descriptor: fitting, occurrences and closure.**
+     - A descriptor copied from a filler is transported by legal closure transport: ρ(Cl_f(S)) = Cl_{f̄}(ρ(S)) whenever ρ f = f̄ ρ on the relevant domains. Every finite path from a generator maps to a quotient path, and every quotient path lifts from a reached preimage.
+     - A descriptor that receives an outer filler has its closure recomputed from the substituted generators, inner descriptors first, and then normalized. Its old closure is never reused.
+     - Own holes contribute their full H1 word images and propositional state slots, not an invented term value. Enclosing holes contribute their actual finite occurrence records.
+     - The calculation uses finite unions, images, least closures and equality tests on the fillers' actual occurrence data at the safe row. So it agrees with the transformed descriptor.
+   - **Semantic value.**
+     - k_0 := Compile(B, Γ) is correct for the base by the induction hypothesis, since B is smaller.
+     - Suppose k_m is correct for the actual normalized term T_m, which the G\* promise makes map-admissible even if it lacks sense. C is smaller than the descriptor, and C[T_m] normalizes to T_{m+1}, which the promise makes map-admissible. So k_{m+1} = Compile(C, Γ[x ↦ k_m]) is correct for T_{m+1}.
+     - By induction on m, every k_m is correct before any truncation.
+     - At a safe index, the series takes exactly the terms T_m[α] admitted by their own sense, and its value is their joint negation. By (F2) and (F3), the transformed series' index-m term is the direct transform of T_m.
+     - Whole-record repetition of (k_m) repeats every entry. So the joint negation over all m equals the joint negation over the preperiod and the cycle.
+
+Every normalization step falls under one of these cases: idle-unit deletion under (F1) and case 2, vacuous-binder deletion under case 4, and inner-first closure recomputation under case 5. ∎
+
+**What is not claimed.**
+
+- Equal records need not classify arbitrary future syntax legality.
+- An unsafe entry need not have a meaning.
+- Unused entries can delay the repetition of a record sequence, but they cannot change an entry the theorem proves correct.
+- The compiler never sends display-only placeholders (the written-descriptor holes of C.6) into a semantic orbit.
 
 ### C.8 Structural compiler, termination and correctness
 
@@ -769,7 +840,7 @@ Iterate F until a whole record repeats. Compute the descriptor's written observa
 
 Termination is structural induction on E. B and C are proper written subexpressions, so their calls terminate for every finite environment. The loop ranges over fixed finite K and repeats within |K|+1 visited positions. A supplied record is never expanded back into the syntax it represents. This is why increasing generated nesting depth does not invalidate termination.
 
-For correctness, strengthen the structural induction to arbitrary legal fillers and supplied records accurate on their safe observations. Holes use direct-composite lookup; ordinary nodes use C.6 and the safe dependency invariant. At a bracket the actual finite terms T_m are map-admissible by the input promise, even if some lack sense. The smaller-expression hypothesis for B gives accuracy of k_0. Its hypothesis for C applies to any current legal filler T_m and gives accuracy at m+1. Natural-number induction therefore establishes the demanded observation accuracy at every finite m, before periodicity is invoked.
+For correctness, strengthen the structural induction to arbitrary legal fillers and supplied records accurate on their safe observations. Holes use direct-composite lookup; ordinary nodes use C.6 and the preservation theorem (C.7). At a bracket the actual finite terms T_m are map-admissible by the input promise, even if some lack sense. The smaller-expression hypothesis for B gives accuracy of k_0. Its hypothesis for C applies to any current legal filler T_m and gives accuracy at m+1. Natural-number induction therefore establishes the demanded observation accuracy at every finite m, before periodicity is invoked.
 
 Legal closure and instance commutation identify each transformed bracket term with the appropriate direct transformed T_m. The separate descriptor calculation gives its written sense. The infinite semantic value is consequently the joint negation of exactly the admitted term observations represented by the code sequence. Whole-record repetition now allows truncation. Arbitrary unused entries can delay repetition but cannot change the demanded observations already proved correct at every index.
 

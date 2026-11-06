@@ -3,7 +3,7 @@ TLP Ledger
 > Current audit status — 31 October 2026, Y register: X52's printed width/profile argument has a counterexample. Y14 accepts the corrected revision-58 A11 proof; Y15 accepts the remaining axioms and actual-world construction in mathematical self-audit. E32 model existence is closed using this corrected proof package; no external independent certificate is claimed. E33 and independence/minimality remain separate. The Y register at the end supersedes historical certification status statements below; X decisions and axioms are retained for audit. Proofs and verification material are incorporated in the consolidated proof record [section consolidated-proof]; its source-line map preserves the original citations. The paper’s former Appendices B–D are retained in the transferred technical appendices [section transferred-appendices] under Y17’s 6,000-word allocation. X54–X57 (November 2026) prove independence of all thirteen axioms (A17, E33, by X57): TLP is minimal under the countermodel standard.
 
 
-The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X62 and audit Y0–Y17 · 526 proposition tags
+The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X63 and audit Y0–Y17 · 526 proposition tags
 
 Entrypoint [section s-entrypoint]Final form [section s-final-form]Principle [section s-principle]LI resolution [section s-li-resolution]Restrictions [section s-restrictions]Decisions [section s-decisions]High alert [section s-high-alert]Orders [section s-orders]Earmarks [section s-earmarks]Revisions [section s-revisions]Signature [section s-signature]Core axioms [section s-core-axioms]Derivations [section s-derivations]R3 results [section s-r3-results]R3b Results [section s-r3b-results]Formal notes [section s-formal-notes]Notes [section s-notes]Entrypoint record [section s-entrypoint-record]Proposition tags [section s-proposition-tags]
 
@@ -14038,3 +14038,13 @@ X62 — The user's four items (6 November 2026; the user's decisions)
 - LI comparison (note 1) stated as a lexicographic pair (V, R) of mark counts per key (kind, level), V first; a mark counts once per proposition at the kind of the heaviest unit narrowed and at the proposition's level (PRINCIPLE).
 - D-S4 renamed D20s, with a note: the free number 20 (D20 withdrawn, X42).
 - [Witt1973] dropped from the bibliography (cited nowhere).
+
+X63 — Appendix C: the preservation theorem (6 November 2026; pending audit)
+
+The outside reassessment named C.7's compositionality as the hinge of A11 and asked for a case-by-case proof. C.7 is rewritten as a theorem:
+- Observation indices (word map, reservation pattern, equality pattern with profile tuple, or H_b placement); safe index (the direct transform is map-admissible); a record is correct for T when it agrees with the reference semantics at every safe index.
+- Theorem (preservation): for legal fillers and a legal normalized composite, Compile(E, [x_i := k_i]) is correct whenever each k_i is. Facts F1 (components), F2 (commutation), F3 (instances, from N+).
+- Proof by structural induction, with cases atom, mapped hole, N over a list, N over an abstraction, series descriptor. The five cases named by the outside reader are handled explicitly: binder over a hole's exposed letter (case 4), repeated holes with different maps and non-injective maps (case 2), newly vacuous abstraction (case 4), receiving inner descriptor (case 5). Every normalization step is assigned to a case.
+- C.3: an explicit budget invariant (live bag Q, promoted parameters Q, auxiliary roles Q, names n: 3Q+n < b).
+- C.4: a fitting-exposure lemma (acceptance at a node depends only on the boundary placement, the reserved name tokens and the subexpression).
+Source: the ledger's Y12-Y15 kernel arguments (Lemmas 1-3, the safe dependency invariant, the nested compilation theorem), reorganized as one theorem. Held for adversarial audit (the user's Y engine and a fresh referee): prove the invariant or find a legal counterexample.
