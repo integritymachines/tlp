@@ -761,7 +761,28 @@ Use finite sorted pools for the at most Q exposed variable identities, original 
 
 This is a finite product K. All original names are parameterized, including names which move only after several substitutions. Ambient names absent from the filler still have reservation rows. A larger input with more context names requires a new K.
 
-An atom fills the indicated incidence and truth tables. Ordinary Boolean constructors combine truth entries and boundary acceptance relations. A binder chooses token extensions in H_b and, separately, loops over semantic candidates in M_P, applying N+ and the body's own-instance sense before truth lookup. Occurrence data decide vacuity and exposure. These are explicit finite operations on the record arrays.
+**Record operations.** A record of T is a finite function on the indices ω of C.7. At each index it holds:
+
+- occ[ω] = (Fr, Nm, Ex): the free letters, the names and the exposed atoms of ρ_ω(T) (item 1);
+- fit[ω] ∈ {0,1} at a token index: ρ_ω(T) accepts the placement p_ω under the reservations r_ω (item 2);
+- val[ω] ∈ {0,1} at a semantic index: the component truth of the named instance at the tuple t_ω of M_P (item 3).
+
+Sense is derived from these: sen[ω] = 1 iff some placement, injective on name tokens, has fit = 1 under the instance's own name reservations, and every atom of Ex[ω] denotes a state at t_ω. This is C.2's sense, with the component convention for empty N.
+
+Each constructor computes its record from its children's records by these finite functions:
+
+- **Atom** f(t̄). Fr and Nm are the letters and names of ρ_ω(f(t̄)). Ex is {ρ_ω(f(t̄))} when every argument is a name or a parameter name, and ∅ otherwise. fit = 1 iff the tokens p_ω assigns to the arguments form a state of H_b with the declared incidence. val = 1 iff the referents at t_ω form a true state of M_P.
+- **N(E_1, …, E_m).** occ is the componentwise union. fit[ω] = ∧_i fit_i[ω_i], where ω_i restricts ω to E_i's boundary. val[ω] = 1 iff val_i[ω_i] = 0 for every i. For m = 0, val = 1.
+- **N over z.B.** Let ω⁺ extend ω by z ↦ z.
+  - If z ∉ Fr_B[ω⁺], the abstraction is vacuous and the record is that of N(B).
+  - Otherwise Fr is Fr_B less z, Nm is Nm_B, and Ex = ∅, since atoms under a non-vacuous binder are not exposed (C.2).
+  - fit[ω] = 1 iff some token τ of z's sort in H_b satisfies fit_B[ω⁺, p_ω ∪ {z ↦ τ}] = 1 and avoids two sets of tokens: p_ω's tokens for the same-sort letters of Fr_B, and the same-sort tokens reserved by r_ω (M+).
+  - Adm(ω) is the set of d of z's sort in M_P that satisfy two conditions. First, d is the value neither of a name of ρ_ω(B) nor of another free parameter at t_ω (N+). Second, sen_B[ω_d] = 1, where ω_d extends ρ_ω by z ↦ n_d, a new parameter name, and t_ω by d.
+  - val[ω] = 1 iff val_B[ω_d] = 0 for every d ∈ Adm(ω).
+- **Hole** x_j under μ_j: A_{μ_j}(k_j), below.
+- **Series** [B, x, C]: k_0 = Compile(B, Γ) and k_{m+1} = Compile(C, Γ[x ↦ k_m]) (C.8). val[ω] = 1 iff val_m = 0 at ω's restriction for every m of the recorded preperiod and cycle with sen_m = 1 there. occ and fit are the written-descriptor computation of C.7, case 5.
+
+Every domain is finite. The indices range over the finite pools above (C.7), the tokens over H_b, and the candidates d over M_P.
 
 For a hole mapped by mu, operate on the complete array by
 
@@ -787,8 +808,23 @@ Obs(T)[ω] is the corresponding C.6 entry of the transformed expression ρ_ω(T)
 **Three facts.**
 
 - **(F1) Components.** A subexpression retained in a map-admissible expression is map-admissible. Normalization deletes only idle units and vacuous binders and never moves a retained scope. So each retained subtree of E[T̄] is the corresponding subtree of E with its fillers substituted.
-- **(F2) Commutation.** If μ(T) and ρ(μ(T)) are map-admissible, then ρ(μ(T)) is the direct transform (ρ∘μ)(T), up to hygienic renaming, and normalization commutes with the transformation. So ρ∘μ is safe for T. Legal closure transport (case 5) supplies the closure part.
-- **(F3) Instances.** A candidate d admitted by N+ differs from the names and from the other free parameter values of its scope. So the named instance B[d] is injective on its co-occurring interface and merges no exposed sources. Instantiation therefore commutes with the legal substitutions, and B[d] is map-admissible whenever B is.
+- **(F2) Commutation.** If μ(T) and ρ(μ(T)) are map-admissible, then (ρ∘μ)(T) is map-admissible and equals ρ(μ(T)) up to hygienic renaming. So ρ∘μ is safe for T.
+
+  *Proof.* Write σ̂ for the raw step of a word map σ. It substitutes boundary words hygienically, with private binders freshened, and transports every hole map f to the f̄ with σf = f̄σ on f's closure. Then σ(T) = nf(σ̂(T)), where nf is C.1's normalization. Three observations suffice.
+  - *Raw steps compose.* ρ̂(μ̂(T)) = (ρ∘μ)^(T) up to renaming, as for capture-avoiding substitution. Map-source spellings label closure elements and are not occurrences (C.0, C.1), so only transport changes them. Transport composes: from μf = f′μ and ρf′ = f″ρ follows (ρ∘μ)f = f″(ρ∘μ). The composite transport is defined whenever both steps are: if ρμ(s) = ρμ(s′), then ρμ(f s) = f″(ρμ s) = f″(ρμ s′) = ρμ(f s′). This is the non-injective case.
+  - *Raw steps preserve occurrence status.* Every occurrence in σ̂(S) is the image of one in S, and σ̂ leaves bound letters untouched. A defined identification merges only entries whose targets have equal images: bound targets must already coincide, and every target occurrence keeps an image. So a unit of S is idle, or a binder vacuous, exactly when its image is. Deletions only remove occurrences, so a unit that is idle or vacuous stays so after other deletions. The set nf deletes is therefore independent of order, and nf has a unique result.
+  - *Closures transport.* ρ(Cl_f(G)) = Cl_{f̄}(ρ(G)) (case 5). By induction on nesting depth, inner descriptors first, recomputing a closure after a raw step gives the transported closure.
+
+  Hence nf∘σ̂ = nf∘σ̂∘nf up to renaming. So ρ(μ(T)) = nf(ρ̂(nf(μ̂(T)))) = nf(ρ̂(μ̂(T))) = nf((ρ∘μ)^(T)) = (ρ∘μ)(T).
+- **(F3) Instances.** Let ω be safe for N over z.B, and let d pass N+ against the names and the other free parameter values of ρ_ω(B). Let ι send z to a parameter name n_d, and let ω_d extend ω by z ↦ n_d. Then ι(ρ_ω(B)) is map-admissible and equals ρ_{ω_d}(B), the direct transform of B at ω_d. So ω_d is safe for B.
+
+  *Proof.* ρ_ω(B) is map-admissible (F1). Every identity of a closure inside it is of one of four kinds:
+  - a name of ρ_ω(B);
+  - a free parameter value of the scope;
+  - a letter private to the body;
+  - z.
+
+  Map-source spellings are not a fifth kind, since they label closure elements and change only by transport (C.0, C.1). N+ separates n_d from the first two kinds; in particular n_d is new, since equal referents would share a name. Freshening separates it from the third. So ι is injective on every closure, and its transport ιfι⁻¹ is defined at every hole: ι identifies no closure sources, compatible or not. It merges no occurrences, so normalization deletes exactly what it deletes in ρ_ω(B). Hence ι(ρ_ω(B)) is map-admissible. ι moves only z, and ρ_ω only the external boundary, so ι∘ρ_ω = ρ_{ω_d} on B's boundary. (F2) then gives ι(ρ_ω(B)) = ρ_{ω_d}(B).
 
 **Proof.** By induction on the written size of E, with cases by the outermost constructor. The normalization steps are absorbed where they arise.
 
@@ -798,7 +834,7 @@ Obs(T)[ω] is the corresponding C.6 entry of the transformed expression ρ_ω(T)
    - **Non-injective maps.** Suppose μ_j identifies two closure sources. If their images are incompatible, the step is undefined in G\* and the composite is not legal, so the hypothesis excludes it. If they are compatible, ω∘μ_j is an index with an identification pattern. Records carry every identification pattern of their boundary (C.6), and the identified row is safe by (F2). A failed identity row of k_j is never consulted for the composite and cannot erase a defined composite row (C.6).
 3. **N over a finite list** (E_1, …, E_m).
    - Occurrence sets are unions.
-   - Sense requires every component's sense, and truth is joint negation.
+   - Truth is joint negation. Sense is derived from the composite's fitting and exposed atoms (C.6).
    - Fitting composes the components' acceptance relations at the same boundary assignment (C.4).
 
    A safe index of the composite restricts to a safe index of each component (F1), and the induction hypothesis gives each component's entry.
