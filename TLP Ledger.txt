@@ -3,7 +3,7 @@ TLP Ledger
 > Current audit status — 31 October 2026, Y register: X52's printed width/profile argument has a counterexample. Y14 accepts the corrected revision-58 A11 proof; Y15 accepts the remaining axioms and actual-world construction in mathematical self-audit. E32 model existence is closed using this corrected proof package; no external independent certificate is claimed. E33 and independence/minimality remain separate. The Y register at the end supersedes historical certification status statements below; X decisions and axioms are retained for audit. Proofs and verification material are incorporated in the consolidated proof record [section consolidated-proof]; its source-line map preserves the original citations. The paper’s former Appendices B–D are retained in the transferred technical appendices [section transferred-appendices] under Y17’s 6,000-word allocation. X54–X57 (November 2026) prove independence of all thirteen axioms (A17, E33, by X57): TLP is minimal under the countermodel standard.
 
 
-The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X64 and audit Y0–Y17 · 526 proposition tags
+The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X65 and audit Y0–Y17 · 526 proposition tags
 
 Entrypoint [section s-entrypoint]Final form [section s-final-form]Principle [section s-principle]LI resolution [section s-li-resolution]Restrictions [section s-restrictions]Decisions [section s-decisions]High alert [section s-high-alert]Orders [section s-orders]Earmarks [section s-earmarks]Revisions [section s-revisions]Signature [section s-signature]Core axioms [section s-core-axioms]Derivations [section s-derivations]R3 results [section s-r3-results]R3b Results [section s-r3b-results]Formal notes [section s-formal-notes]Notes [section s-notes]Entrypoint record [section s-entrypoint-record]Proposition tags [section s-proposition-tags]
 
@@ -14061,4 +14061,18 @@ Paper edits:
 - F3 is now a lemma with a proof. Every identity of a closure is a name, a free parameter value, a private letter or z. Map-source spellings are not a fifth kind: they label closure elements and change only by transport. N+ and freshening make ι: z ↦ n_d injective on every closure, so it identifies no sources. Then ι∘ρ_ω = ρ_{ω_d}, and F2 applies.
 - C.6 now gives the record operations as exact finite functions. The fields are occ, fit and val; sen is derived from fit and the exposed atoms. There is one rule per constructor: atom, N-list, N over an abstraction (vacuity, M+, N+, Adm), hole, series.
 - C.7, case 3: sense is now derived (C.6), replacing "requires every component's sense".
+Pending: Y's audit.
+
+X65 — Y's audit of X64; total valuation, state presence, normal form (6 November 2026)
+
+Y's audit of X64 found no counterexample to F2 or F3. It left three items open:
+- (1) val is Boolean on map-admissible expressions without sense, while C.2's truth needs sense;
+- (2) C.6 names root/component state-presence flags but its exact fields omit them;
+- (3) F2 needs a confluence argument for idle declarations, closure recomputation and vacuous binders.
+
+Paper edits:
+- For (1), val is now a total valuation. A non-denoting atom has val = 0. C.6 states the agreement with C.2's truth on sense-bearing signs, their components and admitted instances, by induction: val is consulted only at components and sen-admitted instances, every atom so consulted denotes, and N() is true as a component. C-nv filtering is unchanged, since Adm and the series consult sen, never val. C.7's Obs specifies the reference computation, and a correct record gives C.2's truth at safe sense-bearing indices.
+- For (2), occ now includes st, the state-presence flag. st is 1 for an atom, ∨ for an N-list (0 for N()), st_B for an abstraction, and for a series counts own-hole slots. sen is standalone sense and requires st = 1. A component needs only val: N() has val = 1 and sen = 0.
+- For (3), C.1 normalization now repeats its stages until nothing changes. A new Lemma (normal form): Φ(D), the set of units idle or vacuous relative to X−D with recomputed least closures, is monotone. Its least fixed point D* is what every run of the stages deletes, in any order, and all interactions are steps of that one iteration. F2's second observation now gives Φ_{σ̂S}(σ̂D) = σ̂Φ_S(D), hence D*(σ̂S) = σ̂D*(S) and nf∘σ̂ = σ̂∘nf.
+
 Pending: Y's audit.

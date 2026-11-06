@@ -688,7 +688,19 @@ For a descriptor, form its finite least word closure L: include the free letters
 
 where bnd(j) contains the letters bound above that hole. It writes the full image mu_j(V ∪ N_br), identities included. Map-source spellings are scope-inert. There is no name generation or shadowing of a binder on a path to a hole. Enclosing-hole images in an inner descriptor must respect its interface or the intervening binders.
 
-Set T_0=B. To form T_(m+1), freshen T_m's private binders, apply the appropriate map at each hole, substitute the copies into C, and normalize. Normalization recomputes inner closures and hole images from inside out, deletes idle declaration units, then deletes newly vacuous abstractions with their enclosing truth operation retained. It does not move a surviving scope, merge prefixes or inspect other syntactic features of a filler. A map identifying two inner closure sources with incompatible images is undefined. Admission of a series requires every stipulated successive step, including nested steps, to be defined. This is the syntactic promise, not a test assumed available to the algorithm.
+Set T_0=B. To form T_(m+1), freshen T_m's private binders, apply the appropriate map at each hole, substitute the copies into C, and normalize. Normalization recomputes inner closures and hole images from inside out, deletes idle declaration units, then deletes newly vacuous abstractions with their enclosing truth operation retained. It repeats these stages until nothing changes. It does not move a surviving scope, merge prefixes or inspect other syntactic features of a filler. A map identifying two inner closure sources with incompatible images is undefined. Admission of a series requires every stipulated successive step, including nested steps, to be defined. This is the syntactic promise, not a test assumed available to the algorithm.
+
+**Lemma (normal form).** The result of normalization does not depend on the order of its stages.
+
+*Proof.* Let X be a raw expression. Its units are the entries of written images and the binders. For a set D of units, let X−D delete them and recompute every closure as the least closure of what remains. Let Φ(D) be the set of units that are idle or vacuous relative to the occurrences and closures of X−D.
+
+- Φ is monotone. A larger D leaves fewer occurrences. Least closures of fewer generators are smaller, inner and outer alike, so fewer entries reach a filler and fewer binders bind an occurrence.
+- So Φ has a least fixed point D* = ⋃_k Φ^k(∅), reached in finitely many steps.
+- Every run of the stages deletes exactly D*.
+  - Each deleted unit was idle or vacuous relative to some D_k ⊆ D*, so it lies in Φ(D_k) ⊆ Φ(D*) = D*.
+  - A run that stops has Φ(D) ⊆ D. By monotonicity, each deleted unit stays in Φ(D), so D = Φ(D) ⊇ D*.
+
+So nf(X) = X−D*. Every interaction among the stages is a step of this one monotone iteration: an entry deletion that empties a binder, a shrinking inner closure that idles an outer entry, or the reverse. Deleting a vacuous binder removes no occurrence, so it changes no other unit's status. ∎
 
 Definitions are finite, uniform and well founded; expand them hygienically before performing these operations. Form arities other than two have no atomic state in Φ. Empty ordinary N has value true as a permitted component, but no standalone state-bearing sign. A vacuous abstraction has the singleton value B; N over it is N(B), not B.
 
@@ -763,26 +775,41 @@ This is a finite product K. All original names are parameterized, including name
 
 **Record operations.** A record of T is a finite function on the indices ω of C.7. At each index it holds:
 
-- occ[ω] = (Fr, Nm, Ex): the free letters, the names and the exposed atoms of ρ_ω(T) (item 1);
+- occ[ω] = (Fr, Nm, Ex, st), the occurrence data of ρ_ω(T) (item 1):
+  - its free letters, names and exposed atoms;
+  - the state-presence flag st, with st = 1 iff ρ_ω(T) places at least one state token (an atom, or a series' propositional-letter slot, C.2);
 - fit[ω] ∈ {0,1} at a token index: ρ_ω(T) accepts the placement p_ω under the reservations r_ω (item 2);
-- val[ω] ∈ {0,1} at a semantic index: the component truth of the named instance at the tuple t_ω of M_P (item 3).
+- val[ω] ∈ {0,1} at a semantic index: the total valuation of the named instance at the tuple t_ω of M_P (item 3). It is defined by the rules below for every map-admissible expression, with or without sense.
 
-Sense is derived from these: sen[ω] = 1 iff some placement, injective on name tokens, has fit = 1 under the instance's own name reservations, and every atom of Ex[ω] denotes a state at t_ω. This is C.2's sense, with the component convention for empty N.
+Sense is derived from these fields. sen[ω] = 1 iff three conditions hold:
+- st[ω] = 1;
+- some placement, injective on name tokens, has fit = 1 under the instance's own name reservations;
+- every atom of Ex[ω] denotes a state at t_ω.
+
+sen is standalone sense, the value-admission entry of item 3. A component needs neither st nor sen, only val. So N() has val = 1 as a component and sen = 0 as a standalone sign (C.1).
 
 Each constructor computes its record from its children's records by these finite functions:
 
-- **Atom** f(t̄). Fr and Nm are the letters and names of ρ_ω(f(t̄)). Ex is {ρ_ω(f(t̄))} when every argument is a name or a parameter name, and ∅ otherwise. fit = 1 iff the tokens p_ω assigns to the arguments form a state of H_b with the declared incidence. val = 1 iff the referents at t_ω form a true state of M_P.
-- **N(E_1, …, E_m).** occ is the componentwise union. fit[ω] = ∧_i fit_i[ω_i], where ω_i restricts ω to E_i's boundary. val[ω] = 1 iff val_i[ω_i] = 0 for every i. For m = 0, val = 1.
+- **Atom** f(t̄). Fr and Nm are the letters and names of ρ_ω(f(t̄)). Ex is {ρ_ω(f(t̄))} when every argument is a name or a parameter name, and ∅ otherwise. st = 1. fit = 1 iff the tokens p_ω assigns to the arguments form a state of H_b with the declared incidence. val = 1 iff the referents at t_ω form a true state of M_P.
+- **N(E_1, …, E_m).** occ is the componentwise union, with st = ∨_i st_i (so st = 0 for m = 0). fit[ω] = ∧_i fit_i[ω_i], where ω_i restricts ω to E_i's boundary. val[ω] = 1 iff val_i[ω_i] = 0 for every i. For m = 0, val = 1.
 - **N over z.B.** Let ω⁺ extend ω by z ↦ z.
   - If z ∉ Fr_B[ω⁺], the abstraction is vacuous and the record is that of N(B).
-  - Otherwise Fr is Fr_B less z, Nm is Nm_B, and Ex = ∅, since atoms under a non-vacuous binder are not exposed (C.2).
+  - Otherwise Fr is Fr_B less z, Nm is Nm_B, st = st_B, and Ex = ∅, since atoms under a non-vacuous binder are not exposed (C.2).
   - fit[ω] = 1 iff some token τ of z's sort in H_b satisfies fit_B[ω⁺, p_ω ∪ {z ↦ τ}] = 1 and avoids two sets of tokens: p_ω's tokens for the same-sort letters of Fr_B, and the same-sort tokens reserved by r_ω (M+).
   - Adm(ω) is the set of d of z's sort in M_P that satisfy two conditions. First, d is the value neither of a name of ρ_ω(B) nor of another free parameter at t_ω (N+). Second, sen_B[ω_d] = 1, where ω_d extends ρ_ω by z ↦ n_d, a new parameter name, and t_ω by d.
   - val[ω] = 1 iff val_B[ω_d] = 0 for every d ∈ Adm(ω).
 - **Hole** x_j under μ_j: A_{μ_j}(k_j), below.
-- **Series** [B, x, C]: k_0 = Compile(B, Γ) and k_{m+1} = Compile(C, Γ[x ↦ k_m]) (C.8). val[ω] = 1 iff val_m = 0 at ω's restriction for every m of the recorded preperiod and cycle with sen_m = 1 there. occ and fit are the written-descriptor computation of C.7, case 5.
+- **Series** [B, x, C]: k_0 = Compile(B, Γ) and k_{m+1} = Compile(C, Γ[x ↦ k_m]) (C.8). val[ω] = 1 iff val_m = 0 at ω's restriction for every m of the recorded preperiod and cycle with sen_m = 1 there. occ (st included) and fit are the written-descriptor computation of C.7, case 5, in which each own-hole occurrence is a state slot.
 
 Every domain is finite. The indices range over the finite pools above (C.7), the tokens over H_b, and the candidates d over M_P.
+
+**Total valuation and C.2 truth.** The rules assign val to every map-admissible expression, so an atom whose referents form no state has val = 0. C.2 assigns truth only to sense-bearing signs, their components and their admitted instances. On these the two agree, by induction on the rules:
+
+- the rules consult val only at components and at instances admitted by sen;
+- every atom so consulted is exposed in a sense-bearing sign or an admitted instance, so it denotes a state;
+- N() is true as a component in both.
+
+Elsewhere val is an auxiliary value with no semantic claim. The C-nv filter is unchanged: Adm and the series consult sen, never val, to admit an instance.
 
 For a hole mapped by mu, operate on the complete array by
 
@@ -801,7 +828,7 @@ There is no field deciding whether infinitely many future transformations will b
 - for a semantic entry, an equality pattern with parameter names, together with a realizable profile P and a tuple of M_P;
 - for a token entry, a placement in H_b.
 
-Obs(T)[ω] is the corresponding C.6 entry of the transformed expression ρ_ω(T), named instance included, computed in the reference semantics. ω is *safe* for T when ρ_ω(T), with its instance's equality pattern, is map-admissible. A record k is *correct* for T when k[ω] = Obs(T)[ω] for every safe ω. Safety is a proof predicate, not a computed classification: entries at unsafe indices may hold arbitrary deterministic values.
+Obs(T)[ω] is the corresponding C.6 entry of the transformed expression ρ_ω(T), named instance included, computed in the reference semantics. Occurrences, fitting and sense are computed by C.2 and C.4 on ρ_ω(T) itself. val is computed by C.6's rules applied to ρ_ω(T) itself in M_P; a series ranges over all its terms, by the rank recursion of C.8. ω is *safe* for T when ρ_ω(T), with its instance's equality pattern, is map-admissible. A record k is *correct* for T when k[ω] = Obs(T)[ω] for every safe ω. Safety is a proof predicate, not a computed classification: entries at unsafe indices may hold arbitrary deterministic values. By C.6's agreement, a correct record gives C.2's truth at every safe index where the instance has sense.
 
 **Theorem (preservation).** Let E be a written G\* expression with propositional holes x_1, …, x_r, and let T_1, …, T_r be map-admissible fillers. Suppose the normalized composite E[T̄] is map-admissible. If each k_i is correct for T_i, then Compile(E, [x_i ↦ k_i]) is correct for E[T̄].
 
@@ -812,10 +839,10 @@ Obs(T)[ω] is the corresponding C.6 entry of the transformed expression ρ_ω(T)
 
   *Proof.* Write σ̂ for the raw step of a word map σ. It substitutes boundary words hygienically, with private binders freshened, and transports every hole map f to the f̄ with σf = f̄σ on f's closure. Then σ(T) = nf(σ̂(T)), where nf is C.1's normalization. Three observations suffice.
   - *Raw steps compose.* ρ̂(μ̂(T)) = (ρ∘μ)^(T) up to renaming, as for capture-avoiding substitution. Map-source spellings label closure elements and are not occurrences (C.0, C.1), so only transport changes them. Transport composes: from μf = f′μ and ρf′ = f″ρ follows (ρ∘μ)f = f″(ρ∘μ). The composite transport is defined whenever both steps are: if ρμ(s) = ρμ(s′), then ρμ(f s) = f″(ρμ s) = f″(ρμ s′) = ρμ(f s′). This is the non-injective case.
-  - *Raw steps preserve occurrence status.* Every occurrence in σ̂(S) is the image of one in S, and σ̂ leaves bound letters untouched. A defined identification merges only entries whose targets have equal images: bound targets must already coincide, and every target occurrence keeps an image. So a unit of S is idle, or a binder vacuous, exactly when its image is. Deletions only remove occurrences, so a unit that is idle or vacuous stays so after other deletions. The set nf deletes is therefore independent of order, and nf has a unique result.
+  - *Raw steps preserve occurrence status.* Every occurrence in σ̂(S) is the image of one in S, and σ̂ leaves bound letters untouched. A defined identification merges only entries whose targets have equal images: bound targets must already coincide, and every target occurrence keeps an image. With closure transport (the third observation), a unit of S is idle, or a binder vacuous, relative to a deleted set D exactly when its image is idle or vacuous relative to σ̂(D). So Φ_{σ̂(S)}(σ̂(D)) = σ̂(Φ_S(D)), and the normal-form lemma (C.1) gives D*(σ̂(S)) = σ̂(D*(S)).
   - *Closures transport.* ρ(Cl_f(G)) = Cl_{f̄}(ρ(G)) (case 5). By induction on nesting depth, inner descriptors first, recomputing a closure after a raw step gives the transported closure.
 
-  Hence nf∘σ̂ = nf∘σ̂∘nf up to renaming. So ρ(μ(T)) = nf(ρ̂(nf(μ̂(T)))) = nf(ρ̂(μ̂(T))) = nf((ρ∘μ)^(T)) = (ρ∘μ)(T).
+  Hence nf(σ̂(X)) = σ̂(nf(X)) up to renaming. The right side is already normal, so nf∘σ̂ = nf∘σ̂∘nf. So ρ(μ(T)) = nf(ρ̂(nf(μ̂(T)))) = nf(ρ̂(μ̂(T))) = nf((ρ∘μ)^(T)) = (ρ∘μ)(T).
 - **(F3) Instances.** Let ω be safe for N over z.B, and let d pass N+ against the names and the other free parameter values of ρ_ω(B). Let ι send z to a parameter name n_d, and let ω_d extend ω by z ↦ n_d. Then ι(ρ_ω(B)) is map-admissible and equals ρ_{ω_d}(B), the direct transform of B at ω_d. So ω_d is safe for B.
 
   *Proof.* ρ_ω(B) is map-admissible (F1). Every identity of a closure inside it is of one of four kinds:
