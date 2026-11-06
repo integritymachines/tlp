@@ -3,7 +3,7 @@ TLP Ledger
 > Current audit status — 31 October 2026, Y register: X52's printed width/profile argument has a counterexample. Y14 accepts the corrected revision-58 A11 proof; Y15 accepts the remaining axioms and actual-world construction in mathematical self-audit. E32 model existence is closed using this corrected proof package; no external independent certificate is claimed. E33 and independence/minimality remain separate. The Y register at the end supersedes historical certification status statements below; X decisions and axioms are retained for audit. Proofs and verification material are incorporated in the consolidated proof record [section consolidated-proof]; its source-line map preserves the original citations. The paper’s former Appendices B–D are retained in the transferred technical appendices [section transferred-appendices] under Y17’s 6,000-word allocation. X54–X57 (November 2026) prove independence of all thirteen axioms (A17, E33, by X57): TLP is minimal under the countermodel standard.
 
 
-The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X68 and audit Y0–Y17 · 526 proposition tags
+The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X69 and audit Y0–Y17 · 526 proposition tags
 
 Entrypoint [section s-entrypoint]Final form [section s-final-form]Principle [section s-principle]LI resolution [section s-li-resolution]Restrictions [section s-restrictions]Decisions [section s-decisions]High alert [section s-high-alert]Orders [section s-orders]Earmarks [section s-earmarks]Revisions [section s-revisions]Signature [section s-signature]Core axioms [section s-core-axioms]Derivations [section s-derivations]R3 results [section s-r3-results]R3b Results [section s-r3b-results]Formal notes [section s-formal-notes]Notes [section s-notes]Entrypoint record [section s-entrypoint-record]Proposition tags [section s-proposition-tags]
 
@@ -14123,3 +14123,14 @@ Paper edits:
 - F3: z is bound, so it is the source of no inherited closure, and ι leaves I(B) unchanged.
 
 Pending: Y's audit.
+
+X69 — Y accepts X68; preservation machinery closed (6 November 2026)
+
+Y's audit of X68:
+- Accepted: the inherited-interface definition, extraction, target-only transformation at inherited holes, transformation together with the owner (under G* compatibility), and F3.
+- No counterexample to A11.
+- Y's conclusion: this closes the sequence of normalization and substitution objections (X63–X68). It is not an exhaustive independent verification of A11.
+
+Paper edit (Y's editorial suggestion): F2 now prints the two inherited-hole actions, f^σ = σ∘f with the owner fixed, and f^σ∘σ = σ∘f with the owner transported.
+
+Y's recommendation, pending the user's decision: freeze this portion of Appendix C. Further work should be an independent proof audit or executable conformance testing, not more clarification edits without a new mathematical objection.
