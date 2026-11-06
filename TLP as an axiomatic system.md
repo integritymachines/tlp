@@ -690,17 +690,22 @@ where bnd(j) contains the letters bound above that hole. It writes the full imag
 
 Set T_0=B. To form T_(m+1), freshen T_m's private binders, apply the appropriate map at each hole, substitute the copies into C, and normalize. Normalization recomputes inner closures and hole images from inside out, deletes idle declaration units, then deletes newly vacuous abstractions with their enclosing truth operation retained. It repeats these stages until nothing changes. It does not move a surviving scope, merge prefixes or inspect other syntactic features of a filler. A map identifying two inner closure sources with incompatible images is undefined. Admission of a series requires every stipulated successive step, including nested steps, to be defined. This is the syntactic promise, not a test assumed available to the algorithm.
 
-**Lemma (normal form).** The result of normalization does not depend on the order of its stages.
+**Lemma (normal form).** Normalization has one result, whatever the order of its stages.
 
-*Proof.* Let X be a raw expression. Its units are the entries of written images and the binders. For a set D of units, let X−D delete them and recompute every closure as the least closure of what remains. Let Φ(D) be the set of units that are idle or vacuous relative to the occurrences and closures of X−D.
+*Proof.* Let X be a raw expression and U its finite set of units: the entries of written images and the binders. For D ⊆ U, let X−D delete D and recompute every closure as the least solution of C.0's system, for all descriptors at once, inner and outer. A unit u ∈ U, deleted or not, is *dead* relative to X−D when one of two conditions holds:
 
-- Φ is monotone. A larger D leaves fewer occurrences. Least closures of fewer generators are smaller, inner and outer alike, so fewer entries reach a filler and fewer binders bind an occurrence.
-- So Φ has a least fixed point D* = ⋃_k Φ^k(∅), reached in finitely many steps.
-- Every run of the stages deletes exactly D*.
-  - Each deleted unit was idle or vacuous relative to some D_k ⊆ D*, so it lies in Φ(D_k) ⊆ Φ(D*) = D*.
-  - A run that stops has Φ(D) ⊆ D. By monotonicity, each deleted unit stays in Φ(D), so D = Φ(D) ⊇ D*.
+- u is an entry whose source is free in no filler at its hole, in X−D;
+- u is a binder whose letter has no occurrence in the remainder of its body.
 
-So nf(X) = X−D*. Every interaction among the stages is a step of this one monotone iteration: an entry deletion that empties a binder, a shrinking inner closure that idles an outer entry, or the reverse. Deleting a vacuous binder removes no occurrence, so it changes no other unit's status. ∎
+An entry whose source has left the recomputed closure is dead, because a filler's free words are generators of the closure at its hole (C.0). So recomputing closures and images deletes only dead units. Let Φ̂(D) = D ∪ {u ∈ U : u is dead relative to X−D}.
+
+- *Deletion creates no reach.* Recomputation never changes a map's values. An entry is a pair (s, μ_j(s)) of the declared map, and deletion only removes pairs. For D ⊆ D′, X−D′ has fewer generators and fewer pairs, so each least closure of X−D′ lies inside the corresponding closure of X−D. A deleted entry removes words, and a deleted binder is vacuous, so it frees none. Hence the free words of every filler, and the occurrences of every letter, only shrink.
+- *Persistence.* Both conditions for a dead unit assert an absence. So a unit dead relative to X−D is dead relative to X−D′ for every D′ ⊇ D. Hence Φ̂ is inflationary and monotone. Its least fixed point D* = ⋃_k Φ̂^k(∅) is reached in at most |U| steps.
+- *Every run deletes D\*.* Each stage of a run deletes units dead relative to the current remainder, and the run stops when none is left.
+  - By induction each D_k lies in D*. The units added at stage k are dead relative to X−D_(k−1), and D_(k−1) ⊆ D*, so they lie in Φ̂(D_(k−1)) ⊆ Φ̂(D*) = D*.
+  - At the stop, Φ̂(D) = D, so D ⊇ D*.
+
+So nf(X) = X−D*. Every interaction among the stages is a step of this one iteration: an entry deletion that empties a binder, a shrinking inner closure that idles an outer entry, or the reverse. ∎
 
 Definitions are finite, uniform and well founded; expand them hygienically before performing these operations. Form arities other than two have no atomic state in Φ. Empty ordinary N has value true as a permitted component, but no standalone state-bearing sign. A vacuous abstraction has the singleton value B; N over it is N(B), not B.
 
@@ -839,10 +844,14 @@ Obs(T)[ω] is the corresponding C.6 entry of the transformed expression ρ_ω(T)
 
   *Proof.* Write σ̂ for the raw step of a word map σ. It substitutes boundary words hygienically, with private binders freshened, and transports every hole map f to the f̄ with σf = f̄σ on f's closure. Then σ(T) = nf(σ̂(T)), where nf is C.1's normalization. Three observations suffice.
   - *Raw steps compose.* ρ̂(μ̂(T)) = (ρ∘μ)^(T) up to renaming, as for capture-avoiding substitution. Map-source spellings label closure elements and are not occurrences (C.0, C.1), so only transport changes them. Transport composes: from μf = f′μ and ρf′ = f″ρ follows (ρ∘μ)f = f″(ρ∘μ). The composite transport is defined whenever both steps are: if ρμ(s) = ρμ(s′), then ρμ(f s) = f″(ρμ s) = f″(ρμ s′) = ρμ(f s′). This is the non-injective case.
-  - *Raw steps preserve occurrence status.* Every occurrence in σ̂(S) is the image of one in S, and σ̂ leaves bound letters untouched. A defined identification merges only entries whose targets have equal images: bound targets must already coincide, and every target occurrence keeps an image. With closure transport (the third observation), a unit of S is idle, or a binder vacuous, relative to a deleted set D exactly when its image is idle or vacuous relative to σ̂(D). So Φ_{σ̂(S)}(σ̂(D)) = σ̂(Φ_S(D)), and the normal-form lemma (C.1) gives D*(σ̂(S)) = σ̂(D*(S)).
+  - *Raw steps preserve the deletion process.* σ̂ fixes binders and bound letters. It merges two entries only when σ identifies their sources compatibly, and every unit of σ̂(X) is the image of units of X. For D ⊆ U, let σ_∀(D) be the set of image units all of whose preimages lie in D. Then σ̂(X−D) = σ̂(X)−σ_∀(D), with closures transported (third observation). An image unit is dead relative to σ̂(X−D) iff all its preimages are dead relative to X−D:
+    - for an entry, σ(s) is free in the transformed filler iff some member of s's σ-class is free in the filler;
+    - for a binder, σ̂ keeps every occurrence of a bound letter, since merged entries with a bound target share it.
+
+    Let D_k = Φ̂_X^k(∅). Each unit of D_k is dead relative to X−D_k, by persistence. So by induction on k, σ_∀(D_k) = Φ̂_{σ̂(X)}^k(∅), starting from σ_∀(∅) = ∅. Hence D*(σ̂(X)) = σ_∀(D*(X)).
   - *Closures transport.* ρ(Cl_f(G)) = Cl_{f̄}(ρ(G)) (case 5). By induction on nesting depth, inner descriptors first, recomputing a closure after a raw step gives the transported closure.
 
-  Hence nf(σ̂(X)) = σ̂(nf(X)) up to renaming. The right side is already normal, so nf∘σ̂ = nf∘σ̂∘nf. So ρ(μ(T)) = nf(ρ̂(nf(μ̂(T)))) = nf(ρ̂(μ̂(T))) = nf((ρ∘μ)^(T)) = (ρ∘μ)(T).
+  Hence nf(σ̂(X)) = σ̂(X)−σ_∀(D*(X)) = σ̂(nf(X)) up to renaming. Applied to nf(X), this shows that the right side is already normal, so nf∘σ̂ = nf∘σ̂∘nf. So ρ(μ(T)) = nf(ρ̂(nf(μ̂(T)))) = nf(ρ̂(μ̂(T))) = nf((ρ∘μ)^(T)) = (ρ∘μ)(T).
 - **(F3) Instances.** Let ω be safe for N over z.B, and let d pass N+ against the names and the other free parameter values of ρ_ω(B). Let ι send z to a parameter name n_d, and let ω_d extend ω by z ↦ n_d. Then ι(ρ_ω(B)) is map-admissible and equals ρ_{ω_d}(B), the direct transform of B at ω_d. So ω_d is safe for B.
 
   *Proof.* ρ_ω(B) is map-admissible (F1). Every identity of a closure inside it is of one of four kinds:

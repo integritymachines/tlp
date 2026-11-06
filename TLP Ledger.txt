@@ -3,7 +3,7 @@ TLP Ledger
 > Current audit status — 31 October 2026, Y register: X52's printed width/profile argument has a counterexample. Y14 accepts the corrected revision-58 A11 proof; Y15 accepts the remaining axioms and actual-world construction in mathematical self-audit. E32 model existence is closed using this corrected proof package; no external independent certificate is claimed. E33 and independence/minimality remain separate. The Y register at the end supersedes historical certification status statements below; X decisions and axioms are retained for audit. Proofs and verification material are incorporated in the consolidated proof record [section consolidated-proof]; its source-line map preserves the original citations. The paper’s former Appendices B–D are retained in the transferred technical appendices [section transferred-appendices] under Y17’s 6,000-word allocation. X54–X57 (November 2026) prove independence of all thirteen axioms (A17, E33, by X57): TLP is minimal under the countermodel standard.
 
 
-The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X65 and audit Y0–Y17 · 526 proposition tags
+The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X66 and audit Y0–Y17 · 526 proposition tags
 
 Entrypoint [section s-entrypoint]Final form [section s-final-form]Principle [section s-principle]LI resolution [section s-li-resolution]Restrictions [section s-restrictions]Decisions [section s-decisions]High alert [section s-high-alert]Orders [section s-orders]Earmarks [section s-earmarks]Revisions [section s-revisions]Signature [section s-signature]Core axioms [section s-core-axioms]Derivations [section s-derivations]R3 results [section s-r3-results]R3b Results [section s-r3b-results]Formal notes [section s-formal-notes]Notes [section s-notes]Entrypoint record [section s-entrypoint-record]Proposition tags [section s-proposition-tags]
 
@@ -14074,5 +14074,21 @@ Paper edits:
 - For (1), val is now a total valuation. A non-denoting atom has val = 0. C.6 states the agreement with C.2's truth on sense-bearing signs, their components and admitted instances, by induction: val is consulted only at components and sen-admitted instances, every atom so consulted denotes, and N() is true as a component. C-nv filtering is unchanged, since Adm and the series consult sen, never val. C.7's Obs specifies the reference computation, and a correct record gives C.2's truth at safe sense-bearing indices.
 - For (2), occ now includes st, the state-presence flag. st is 1 for an atom, ∨ for an N-list (0 for N()), st_B for an abstraction, and for a series counts own-hole slots. sen is standalone sense and requires st = 1. A component needs only val: N() has val = 1 and sen = 0.
 - For (3), C.1 normalization now repeats its stages until nothing changes. A new Lemma (normal form): Φ(D), the set of units idle or vacuous relative to X−D with recomputed least closures, is monotone. Its least fixed point D* is what every run of the stages deletes, in any order, and all interactions are steps of that one iteration. F2's second observation now gives Φ_{σ̂S}(σ̂D) = σ̂Φ_S(D), hence D*(σ̂S) = σ̂D*(S) and nf∘σ̂ = σ̂∘nf.
+
+Pending: Y's audit.
+
+X66 — Y's audit of X65; normal-form lemma repaired (6 November 2026)
+
+Y's audit of X65:
+- It provisionally accepts the total valuation and st, including st for a series.
+- It finds no counterexample to A11.
+- It found a defect in the normal-form proof. As written, Φ(D) is the set of units dead in X−D, which is not monotone. For X = N(z.R_1(a,b)), Φ(∅) = {u} but Φ({u}) = ∅.
+- It asks for three things: an accumulating operator; persistence under recomputed nested closures and maps; and propagation into F2, including non-injective identification.
+
+Paper edits:
+- The lemma now uses the accumulating operator Φ̂(D) = D ∪ {u ∈ U : u dead relative to X−D}. Deadness is defined for every unit, deleted or not: an entry is dead when its source is free in no filler at its hole; a binder is dead when its letter has no occurrence in its body. An entry whose source leaves the recomputed closure is dead, since a filler's free words generate the closure at its hole (C.0), so recomputation deletes only dead units.
+- "Deletion creates no reach": recomputing never changes a map's values, since entries are pairs of the declared map and deletion only removes pairs. Least closures are monotone in both generators and pairs, for the joint inner and outer system. A deleted binder is vacuous and frees nothing.
+- Persistence: both conditions for deadness assert an absence. So Φ̂ is inflationary and monotone, and its least fixed point D* is what every run of the stages deletes.
+- F2: σ_∀(D) is the set of image units all of whose preimages lie in D, and σ̂(X−D) = σ̂(X)−σ_∀(D). An image unit is dead iff all its preimages are. For a merged entry this holds through its source class; for a binder, σ̂ keeps every occurrence of a bound letter. On the chain D_k = Φ̂^k(∅), each unit of D_k is dead (by persistence), so σ_∀(D_k) = Φ̂^k_{σ̂X}(∅). Hence D*(σ̂X) = σ_∀(D*X) and nf∘σ̂ = σ̂∘nf. The induction is restricted to the chain because for an arbitrary D the equality can fail when a member of D is not dead.
 
 Pending: Y's audit.
