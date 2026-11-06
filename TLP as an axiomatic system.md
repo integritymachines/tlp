@@ -1007,7 +1007,7 @@ The readings follow the ledger's proposition tags, normalized to this paper's nu
 - **2.04** · DEF · world := W; with A5 (χ\* exists)
 - **2.05** · THM · = 1.12  ← 2.04, S1
 - **2.06** · DEF · reality := χ\* (positive and negative facts)
-- **2.061** · A4 · independence: Λ = {0,1}^A, i.e., C empty
+- **2.061** · A4 · independence: Λ = {0,1}^𝔸, i.e., C empty
 - **2.062** · THM · pairwise independence (strictly weaker)  ← A4
 - **2.063** · THM · world = total reality, given fixed A  ← 2.04, 2.06
 - **2.1** · DEF · picture P = (D, ρ, tau) in Pi; D a nonempty finite set of states of affairs (the medium); sense at χ := sigma_{P,χ} = (χ|D) o r^-1
@@ -1052,7 +1052,7 @@ The readings follow the ledger's proposition tags, normalized to this paper's nu
 - **3.01** · THM · true thoughts jointly picture χ\*  ← A7 (atomic case; thoughts as types), A6a
 - **3.02** · THM · thinkable implies possible  ← weak: A4; strict: 2.151 (into-half)
 - **3.03** · THM · senses of thoughts (pictures) lie in P(Λ) \ {empty, Λ}: we cannot think anything unlogical. Tautology and contradiction have the null sense (LI reading)  ← 2.203, 2.225
-- **3.031** · THM · logic excludes no point of {0,1}^A  ← A4
+- **3.031** · THM · logic excludes no point of {0,1}^𝔸  ← A4
 - **3.032** · UNS · contradiction is ill-typed for pictures (sigma must be a function)
 - **3.0321** · REM · physics = constraints on points of Λ; geometry/logic = index structure (A, H)
 - **3.04** · DEF · a priori correct := the thought's possibility ensures its truth. (X41, J-apriori): the diagonal reading is not a reading. Extensional [[sigma]] = Λ excluded  ← 2.225
