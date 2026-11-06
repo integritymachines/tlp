@@ -721,6 +721,20 @@ A filled hole belongs to a descriptor outside X. X−D does not recompute that d
 
 So nf(X) = X−D*. Every interaction among the stages is a step of this one iteration: an entry deletion that empties a binder, a shrinking inner closure that idles an outer entry, or the reverse. ∎
 
+**Inherited interface.** Let T occur in an expression S. A hole in T is *inherited* when its owning descriptor lies outside T. The inherited interface I(T) assigns to each inherited hole its owner's closure in S. T is *normal relative to* I(T) when no unit of T is dead, where the second condition of deadness is read against I(T) at inherited holes and against the recomputed closure at all other holes.
+
+**Lemma (extraction).** If S is normal, every retained subexpression T of S is normal relative to I(T).
+
+*Proof.* The units of T are units of S. Consider first a descriptor inside T. Its closure has three ingredients:
+
+- its free words outside its holes;
+- the words written at enclosing holes inside its bracket;
+- its own hole maps.
+
+The second ingredient is C.0's contribution from an enclosing series. It consists of the full images written at those holes (C.1), so it is part of the inner text. All three ingredients lie in T, so the descriptor has the same closure in T as in S.
+
+What depends on the context is whether an entry at an inherited hole is live, since that is judged against the owner's closure. I(T) is that closure by definition. The first condition of deadness does not arise in a normal S, and the third is local to a binder's body. So each unit of T is dead relative to I(T) exactly when it is dead in S, and in S none is. ∎
+
 Definitions are finite, uniform and well founded; expand them hygienically before performing these operations. Form arities other than two have no atomic state in Φ. Empty ordinary N has value true as a permitted component, but no standalone state-bearing sign. A vacuous abstraction has the singleton value B; N over it is N(B), not B.
 
 ### C.2 Fitting, sense and value
@@ -854,18 +868,18 @@ Obs(T)[ω] is the corresponding C.6 entry of the transformed expression ρ_ω(T)
 **Three facts.**
 
 - **(F1) Components.** A subexpression retained in a map-admissible expression is map-admissible. Normalization deletes only idle units and vacuous binders and never moves a retained scope. So each retained subtree of E[T̄] is the corresponding subtree of E with its fillers substituted.
-- **(F2) Commutation.** Let T be normal. If μ(T) and ρ(μ(T)) are map-admissible, then (ρ∘μ)(T) is map-admissible and equals ρ(μ(T)) up to hygienic renaming. So ρ∘μ is safe for T.
+- **(F2) Commutation.** Let T be normal relative to I(T). If μ(T) and ρ(μ(T)) are map-admissible, then (ρ∘μ)(T) is map-admissible and equals ρ(μ(T)) up to hygienic renaming. So ρ∘μ is safe for T.
 
   *Proof.* Write σ̂ for the raw step of a word map σ. It substitutes boundary words hygienically, with private binders freshened, and transports every hole map f to the f̄ with σf = f̄σ on f's closure. Then σ(T) = nf(σ̂(T)), where nf is C.1's normalization. Three observations suffice.
   - *Raw steps compose.* ρ̂(μ̂(T)) = (ρ∘μ)^(T) up to renaming, as for capture-avoiding substitution. Map-source spellings label closure elements and are not occurrences (C.0, C.1), so only transport changes them. Transport composes: from μf = f′μ and ρf′ = f″ρ follows (ρ∘μ)f = f″(ρ∘μ). The composite transport is defined whenever both steps are: if ρμ(s) = ρμ(s′), then ρμ(f s) = f″(ρμ s) = f″(ρμ s′) = ρμ(f s′). This is the non-injective case.
   - *Raw steps preserve normal form.* σ̂(T) fills no hole, so only the second and third conditions of the normal-form lemma (C.1) can apply.
-    - Every entry of T has its source in its hole's closure. σ̂ sends the entry to one whose source lies in the transported closure, and the transported closure is the recomputed one (third observation). Entries that σ merges become a single entry with one source.
+    - Every entry of T has its source in its hole's closure. σ̂ sends the entry to one whose source lies in the transported closure, and the transported closure is the recomputed one (third observation). Entries that σ merges become a single entry with one source. At an inherited hole, σ̂ rewrites targets only, since map-source spellings are scope-inert labels of the owner's closure (C.1). An owner transformed together with T has its closure transported by the same map (case 5). Either way every source stays in its closure, and I(σ̂(T)) is I(T), transported where the owner is.
     - σ̂ keeps every occurrence of a bound letter, because merged entries with a bound target share it. So no binder becomes vacuous.
 
-    Hence σ̂(T) is normal and σ(T) = σ̂(T). Compatibility is checked on T's closure, and all of that closure is retained. So no raw step depends on a dead entry, and no raw transport is taken that normalization would have made legal.
+    Hence σ̂(T) is normal relative to its inherited interface, and σ(T) = σ̂(T). Compatibility is checked on T's closure, and all of that closure is retained. So no raw step depends on a dead entry, and no raw transport is taken that normalization would have made legal.
   - *Closures transport.* ρ(Cl_f(G)) = Cl_{f̄}(ρ(G)) (case 5). By induction on nesting depth, inner descriptors first, recomputing a closure after a raw step gives the transported closure.
 
-  So, up to renaming, ρ(μ(T)) = ρ̂(μ̂(T)) = (ρ∘μ)^(T) = (ρ∘μ)(T). Observed expressions are normal. Terms are normalized by definition (C.1), and a retained subexpression of a normal expression is normal, since vacuity is local to a binder's body and closures are computed from the descriptor's own text.
+  So, up to renaming, ρ(μ(T)) = ρ̂(μ̂(T)) = (ρ∘μ)^(T) = (ρ∘μ)(T). Observed expressions are normal relative to their inherited interfaces: terms by definition (C.1), and retained subexpressions by the extraction lemma (C.1).
 - **(F3) Instances.** Let ω be safe for N over z.B, and let d pass N+ against the names and the other free parameter values of ρ_ω(B). Let ι send z to a parameter name n_d, and let ω_d extend ω by z ↦ n_d. Then ι(ρ_ω(B)) is map-admissible and equals ρ_{ω_d}(B), the direct transform of B at ω_d. So ω_d is safe for B.
 
   *Proof.* ρ_ω(B) is map-admissible (F1). Every identity of a closure inside it is of one of four kinds:
@@ -874,7 +888,7 @@ Obs(T)[ω] is the corresponding C.6 entry of the transformed expression ρ_ω(T)
   - a letter private to the body;
   - z.
 
-  Map-source spellings are not a fifth kind, since they label closure elements and change only by transport (C.0, C.1). N+ separates n_d from the first two kinds; in particular n_d is new, since equal referents would share a name. Freshening separates it from the third. So ι is injective on every closure, and its transport ιfι⁻¹ is defined at every hole: ι identifies no closure sources, compatible or not. It merges no occurrences, so normalization deletes exactly what it deletes in ρ_ω(B). Hence ι(ρ_ω(B)) is map-admissible. ι moves only z, and ρ_ω only the external boundary, so ι∘ρ_ω = ρ_{ω_d} on B's boundary. (F2) then gives ι(ρ_ω(B)) = ρ_{ω_d}(B).
+  Map-source spellings are not a fifth kind, since they label closure elements and change only by transport (C.0, C.1). N+ separates n_d from the first two kinds; in particular n_d is new, since equal referents would share a name. Freshening separates it from the third. So ι is injective on every closure, and its transport ιfι⁻¹ is defined at every hole: ι identifies no closure sources, compatible or not. It merges no occurrences. Since z is bound, it is the source of no inherited closure, and ι leaves I(B) unchanged. So normalization deletes exactly what it deletes in ρ_ω(B). Hence ι(ρ_ω(B)) is map-admissible. ι moves only z, and ρ_ω only the external boundary, so ι∘ρ_ω = ρ_{ω_d} on B's boundary. (F2) then gives ι(ρ_ω(B)) = ρ_{ω_d}(B).
 
 **Proof.** By induction on the written size of E, with cases by the outermost constructor. The normalization steps are absorbed where they arise.
 

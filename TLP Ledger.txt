@@ -3,7 +3,7 @@ TLP Ledger
 > Current audit status — 31 October 2026, Y register: X52's printed width/profile argument has a counterexample. Y14 accepts the corrected revision-58 A11 proof; Y15 accepts the remaining axioms and actual-world construction in mathematical self-audit. E32 model existence is closed using this corrected proof package; no external independent certificate is claimed. E33 and independence/minimality remain separate. The Y register at the end supersedes historical certification status statements below; X decisions and axioms are retained for audit. Proofs and verification material are incorporated in the consolidated proof record [section consolidated-proof]; its source-line map preserves the original citations. The paper’s former Appendices B–D are retained in the transferred technical appendices [section transferred-appendices] under Y17’s 6,000-word allocation. X54–X57 (November 2026) prove independence of all thirteen axioms (A17, E33, by X57): TLP is minimal under the countermodel standard.
 
 
-The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X67 and audit Y0–Y17 · 526 proposition tags
+The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X68 and audit Y0–Y17 · 526 proposition tags
 
 Entrypoint [section s-entrypoint]Final form [section s-final-form]Principle [section s-principle]LI resolution [section s-li-resolution]Restrictions [section s-restrictions]Decisions [section s-decisions]High alert [section s-high-alert]Orders [section s-orders]Earmarks [section s-earmarks]Revisions [section s-revisions]Signature [section s-signature]Core axioms [section s-core-axioms]Derivations [section s-derivations]R3 results [section s-r3-results]R3b Results [section s-r3b-results]Formal notes [section s-formal-notes]Notes [section s-notes]Entrypoint record [section s-entrypoint-record]Proposition tags [section s-proposition-tags]
 
@@ -14106,5 +14106,20 @@ Paper edits:
 - (a) A new Lemma (filler containment) in C.1: Fr(T_m) ⊆ V ∪ N_br, by induction on m. The base case uses C.0's two generator clauses. The step uses the codomain of μ_j (V ∪ bnd(j) ∪ N_br, with bnd(j) bound above the hole) and the fact that normalization creates no free word. The lemma uses no injectivity, and it extends to enclosing holes and to transformed series by closure transport. The generator claim is withdrawn.
 - A corrected defect, found while writing (a): X66 called an entry dead when its source is free in no filler, which wrongly makes every entry at an unfilled hole dead. Deadness now has three conditions: (1) an entry at a hole filled in forming X whose source is free in no filler there; (2) an entry at an unfilled hole whose source lies outside its recomputed closure; (3) a binder with no occurrence. A filled hole's descriptor lies outside X and is not recomputed, and filler containment indexes its entries. Persistence covers all three conditions.
 - (b) F2 is restricted to normal T, and its second observation is replaced by "raw steps preserve normal form". σ̂(T) fills no hole, every entry's source maps into the transported closure, which is the recomputed one, and bound-letter occurrences are kept. So σ̂(T) is normal, σ(T) = σ̂(T), and compatibility is checked on T's whole closure, all of which is retained; no raw step uses a dead entry. F2 then reads ρ(μ(T)) = ρ̂μ̂T = (ρ∘μ)^T = (ρ∘μ)(T). Observed expressions are normal: terms by definition, and retained subexpressions because vacuity is local and closures come from the descriptor's own text. The σ_∀ deletion-chain correspondence of X66 is no longer needed and is removed.
+
+Pending: Y's audit.
+
+X68 — Y's audit of X67; inherited interface and extraction (6 November 2026)
+
+Y's audit of X67:
+- Accepted: filler containment, the three conditions for deadness, persistence and confluence, and word maps preserving normality when closure interfaces are complete.
+- No counterexample to A11.
+- One item left open: "observed subexpressions are normal" rested on "closures come from the descriptor's own text", but C.0 lets an inner closure receive images from an enclosing series. Y asked for normality relative to the inherited closure interface, and for a proof that extraction preserves it.
+
+Paper edits:
+- C.1: a new definition of the inherited interface I(T). A hole in T is inherited when its owner lies outside T, and I(T) assigns it the owner's closure in S. Normality relative to I(T) reads the second condition of deadness against I(T) at inherited holes.
+- New Lemma (extraction): a retained subexpression of a normal S is normal relative to I(T). An inner descriptor's closure comes from its free words outside holes, the full images written at enclosing holes inside its bracket (C.0's second clause; C.1 writes the full image at the hole, so these are inner text), and its own maps, so it is unchanged by extraction. Only the liveness of entries at inherited holes depends on context, and I(T) supplies exactly that.
+- F2 now assumes T normal relative to I(T). At inherited holes σ̂ rewrites only targets, because sources are scope-inert labels of the owner's closure; an owner transformed together with T is transported by the same map. So I(σ̂T) is I(T), transported where the owner is. The closing claim now cites the extraction lemma.
+- F3: z is bound, so it is the source of no inherited closure, and ι leaves I(B) unchanged.
 
 Pending: Y's audit.
