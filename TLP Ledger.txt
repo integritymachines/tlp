@@ -3,7 +3,7 @@ TLP Ledger
 > Current audit status — 31 October 2026, Y register: X52's printed width/profile argument has a counterexample. Y14 accepts the corrected revision-58 A11 proof; Y15 accepts the remaining axioms and actual-world construction in mathematical self-audit. E32 model existence is closed using this corrected proof package; no external independent certificate is claimed. E33 and independence/minimality remain separate. The Y register at the end supersedes historical certification status statements below; X decisions and axioms are retained for audit. Proofs and verification material are incorporated in the consolidated proof record [section consolidated-proof]; its source-line map preserves the original citations. The paper’s former Appendices B–D are retained in the transferred technical appendices [section transferred-appendices] under Y17’s 6,000-word allocation. X54–X57 (November 2026) prove independence of all thirteen axioms (A17, E33, by X57): TLP is minimal under the countermodel standard.
 
 
-The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X66 and audit Y0–Y17 · 526 proposition tags
+The working record behind "TLP as axiomatic system": rev. 58 with Y audit supplement · thawed at rev. 55 · decisions X0–X67 and audit Y0–Y17 · 526 proposition tags
 
 Entrypoint [section s-entrypoint]Final form [section s-final-form]Principle [section s-principle]LI resolution [section s-li-resolution]Restrictions [section s-restrictions]Decisions [section s-decisions]High alert [section s-high-alert]Orders [section s-orders]Earmarks [section s-earmarks]Revisions [section s-revisions]Signature [section s-signature]Core axioms [section s-core-axioms]Derivations [section s-derivations]R3 results [section s-r3-results]R3b Results [section s-r3b-results]Formal notes [section s-formal-notes]Notes [section s-notes]Entrypoint record [section s-entrypoint-record]Proposition tags [section s-proposition-tags]
 
@@ -14090,5 +14090,21 @@ Paper edits:
 - "Deletion creates no reach": recomputing never changes a map's values, since entries are pairs of the declared map and deletion only removes pairs. Least closures are monotone in both generators and pairs, for the joint inner and outer system. A deleted binder is vacuous and frees nothing.
 - Persistence: both conditions for deadness assert an absence. So Φ̂ is inflationary and monotone, and its least fixed point D* is what every run of the stages deletes.
 - F2: σ_∀(D) is the set of image units all of whose preimages lie in D, and σ̂(X−D) = σ̂(X)−σ_∀(D). An image unit is dead iff all its preimages are. For a merged entry this holds through its source class; for a binder, σ̂ keeps every occurrence of a bound letter. On the chain D_k = Φ̂^k(∅), each unit of D_k is dead (by persistence), so σ_∀(D_k) = Φ̂^k_{σ̂X}(∅). Hence D*(σ̂X) = σ_∀(D*X) and nf∘σ̂ = σ̂∘nf. The induction is restricted to the chain because for an arbitrary D the equality can fail when a member of D is not dead.
+
+Pending: Y's audit.
+
+X67 — Y's audit of X66; filler containment, filled and unfilled holes, F2 on normal forms (6 November 2026)
+
+Y's audit of X66:
+- It accepts the accumulating operator and order independence, conditional on persistence. It accepts restricting F2 to the deletion chain.
+- It finds no counterexample to A11.
+- It left two items open:
+  - (a) C.0 does not make a filler's free words generators of the closure. The proof should use the weaker containment Fr(T_m) ⊆ L_j, proved by induction.
+  - (b) Raw versus normalized legality: a dead raw entry could make a raw transport illegal where the normalized one is legal.
+
+Paper edits:
+- (a) A new Lemma (filler containment) in C.1: Fr(T_m) ⊆ V ∪ N_br, by induction on m. The base case uses C.0's two generator clauses. The step uses the codomain of μ_j (V ∪ bnd(j) ∪ N_br, with bnd(j) bound above the hole) and the fact that normalization creates no free word. The lemma uses no injectivity, and it extends to enclosing holes and to transformed series by closure transport. The generator claim is withdrawn.
+- A corrected defect, found while writing (a): X66 called an entry dead when its source is free in no filler, which wrongly makes every entry at an unfilled hole dead. Deadness now has three conditions: (1) an entry at a hole filled in forming X whose source is free in no filler there; (2) an entry at an unfilled hole whose source lies outside its recomputed closure; (3) a binder with no occurrence. A filled hole's descriptor lies outside X and is not recomputed, and filler containment indexes its entries. Persistence covers all three conditions.
+- (b) F2 is restricted to normal T, and its second observation is replaced by "raw steps preserve normal form". σ̂(T) fills no hole, every entry's source maps into the transported closure, which is the recomputed one, and bound-letter occurrences are kept. So σ̂(T) is normal, σ(T) = σ̂(T), and compatibility is checked on T's whole closure, all of which is retained; no raw step uses a dead entry. F2 then reads ρ(μ(T)) = ρ̂μ̂T = (ρ∘μ)^T = (ρ∘μ)(T). Observed expressions are normal: terms by definition, and retained subexpressions because vacuity is local and closures come from the descriptor's own text. The σ_∀ deletion-chain correspondence of X66 is no longer needed and is removed.
 
 Pending: Y's audit.

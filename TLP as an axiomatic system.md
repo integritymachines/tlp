@@ -690,17 +690,31 @@ where bnd(j) contains the letters bound above that hole. It writes the full imag
 
 Set T_0=B. To form T_(m+1), freshen T_m's private binders, apply the appropriate map at each hole, substitute the copies into C, and normalize. Normalization recomputes inner closures and hole images from inside out, deletes idle declaration units, then deletes newly vacuous abstractions with their enclosing truth operation retained. It repeats these stages until nothing changes. It does not move a surviving scope, merge prefixes or inspect other syntactic features of a filler. A map identifying two inner closure sources with incompatible images is undefined. Admission of a series requires every stipulated successive step, including nested steps, to be defined. This is the syntactic promise, not a test assumed available to the algorithm.
 
+**Lemma (filler containment).** In every legal unfolding, the free words of a filler lie in the external part V ∪ N_br of the closure of the descriptor that owns its hole. So every free word of a filler has an entry at that hole, and the hole map is defined on the whole filler.
+
+*Proof.* Let [B, x, C] have closure L, with external part V ∪ N_br. The free words of a transformed expression are the images of its free words, and for its inner descriptors this is closure transport (C.7, case 5). By induction on m, Fr(T_m) ⊆ V ∪ N_br:
+
+- m = 0. B's free words are generators of L, by C.0's first clause for those outside holes and its second for those written at enclosing holes. None is bound above a hole of the descriptor.
+- Step. T_(m+1) is the normal form of C with each own hole j filled by μ_j of a freshened copy of T_m, which has the same free words.
+  - C's free words outside its own holes are generators.
+  - At hole j, the filled copy's free words are μ_j(Fr(T_m)). μ_j maps into V ∪ bnd(j) ∪ N_br, and the letters of bnd(j) are bound above the hole.
+  - Normalization only deletes units, and a deleted binder is vacuous, so it creates no free word.
+  - No injectivity of μ_j is used.
+
+A filler at an enclosing hole inside a nested descriptor is a term of the enclosing series, covered by that series' instance of the induction. Recomputing the inner closure does not change the enclosing L. If the whole series is transformed by a legal map ρ, its closure becomes ρ(L) (case 5) and its terms ρ(T_m), with Fr(ρ(T_m)) = ρ(Fr(T_m)). ∎
+
 **Lemma (normal form).** Normalization has one result, whatever the order of its stages.
 
-*Proof.* Let X be a raw expression and U its finite set of units: the entries of written images and the binders. For D ⊆ U, let X−D delete D and recompute every closure as the least solution of C.0's system, for all descriptors at once, inner and outer. A unit u ∈ U, deleted or not, is *dead* relative to X−D when one of two conditions holds:
+*Proof.* Let X be a raw expression and U its finite set of units: the entries of written images and the binders. For D ⊆ U, let X−D delete D and recompute every closure as the least solution of C.0's system, for all descriptors at once, inner and outer. A unit u ∈ U, deleted or not, is *dead* relative to X−D when one of three conditions holds:
 
-- u is an entry whose source is free in no filler at its hole, in X−D;
+- u is an entry at a hole filled in forming X, and its source is free in no filler at that hole, in X−D;
+- u is an entry at an unfilled hole, and its source lies outside that hole's recomputed closure in X−D;
 - u is a binder whose letter has no occurrence in the remainder of its body.
 
-An entry whose source has left the recomputed closure is dead, because a filler's free words are generators of the closure at its hole (C.0). So recomputing closures and images deletes only dead units. Let Φ̂(D) = D ∪ {u ∈ U : u is dead relative to X−D}.
+A filled hole belongs to a descriptor outside X. X−D does not recompute that descriptor's closure, whose entries cover every free word of the filler (filler containment). Recomputing closures and images thus deletes exactly the units dead by the second condition. Let Φ̂(D) = D ∪ {u ∈ U : u is dead relative to X−D}.
 
 - *Deletion creates no reach.* Recomputation never changes a map's values. An entry is a pair (s, μ_j(s)) of the declared map, and deletion only removes pairs. For D ⊆ D′, X−D′ has fewer generators and fewer pairs, so each least closure of X−D′ lies inside the corresponding closure of X−D. A deleted entry removes words, and a deleted binder is vacuous, so it frees none. Hence the free words of every filler, and the occurrences of every letter, only shrink.
-- *Persistence.* Both conditions for a dead unit assert an absence. So a unit dead relative to X−D is dead relative to X−D′ for every D′ ⊇ D. Hence Φ̂ is inflationary and monotone. Its least fixed point D* = ⋃_k Φ̂^k(∅) is reached in at most |U| steps.
+- *Persistence.* Each of the three conditions asserts an absence: of the source from the filler's free words, of the source from the recomputed closure, or of any occurrence of the letter. So a unit dead relative to X−D is dead relative to X−D′ for every D′ ⊇ D. Hence Φ̂ is inflationary and monotone. Its least fixed point D* = ⋃_k Φ̂^k(∅) is reached in at most |U| steps.
 - *Every run deletes D\*.* Each stage of a run deletes units dead relative to the current remainder, and the run stops when none is left.
   - By induction each D_k lies in D*. The units added at stage k are dead relative to X−D_(k−1), and D_(k−1) ⊆ D*, so they lie in Φ̂(D_(k−1)) ⊆ Φ̂(D*) = D*.
   - At the stop, Φ̂(D) = D, so D ⊇ D*.
@@ -840,18 +854,18 @@ Obs(T)[ω] is the corresponding C.6 entry of the transformed expression ρ_ω(T)
 **Three facts.**
 
 - **(F1) Components.** A subexpression retained in a map-admissible expression is map-admissible. Normalization deletes only idle units and vacuous binders and never moves a retained scope. So each retained subtree of E[T̄] is the corresponding subtree of E with its fillers substituted.
-- **(F2) Commutation.** If μ(T) and ρ(μ(T)) are map-admissible, then (ρ∘μ)(T) is map-admissible and equals ρ(μ(T)) up to hygienic renaming. So ρ∘μ is safe for T.
+- **(F2) Commutation.** Let T be normal. If μ(T) and ρ(μ(T)) are map-admissible, then (ρ∘μ)(T) is map-admissible and equals ρ(μ(T)) up to hygienic renaming. So ρ∘μ is safe for T.
 
   *Proof.* Write σ̂ for the raw step of a word map σ. It substitutes boundary words hygienically, with private binders freshened, and transports every hole map f to the f̄ with σf = f̄σ on f's closure. Then σ(T) = nf(σ̂(T)), where nf is C.1's normalization. Three observations suffice.
   - *Raw steps compose.* ρ̂(μ̂(T)) = (ρ∘μ)^(T) up to renaming, as for capture-avoiding substitution. Map-source spellings label closure elements and are not occurrences (C.0, C.1), so only transport changes them. Transport composes: from μf = f′μ and ρf′ = f″ρ follows (ρ∘μ)f = f″(ρ∘μ). The composite transport is defined whenever both steps are: if ρμ(s) = ρμ(s′), then ρμ(f s) = f″(ρμ s) = f″(ρμ s′) = ρμ(f s′). This is the non-injective case.
-  - *Raw steps preserve the deletion process.* σ̂ fixes binders and bound letters. It merges two entries only when σ identifies their sources compatibly, and every unit of σ̂(X) is the image of units of X. For D ⊆ U, let σ_∀(D) be the set of image units all of whose preimages lie in D. Then σ̂(X−D) = σ̂(X)−σ_∀(D), with closures transported (third observation). An image unit is dead relative to σ̂(X−D) iff all its preimages are dead relative to X−D:
-    - for an entry, σ(s) is free in the transformed filler iff some member of s's σ-class is free in the filler;
-    - for a binder, σ̂ keeps every occurrence of a bound letter, since merged entries with a bound target share it.
+  - *Raw steps preserve normal form.* σ̂(T) fills no hole, so only the second and third conditions of the normal-form lemma (C.1) can apply.
+    - Every entry of T has its source in its hole's closure. σ̂ sends the entry to one whose source lies in the transported closure, and the transported closure is the recomputed one (third observation). Entries that σ merges become a single entry with one source.
+    - σ̂ keeps every occurrence of a bound letter, because merged entries with a bound target share it. So no binder becomes vacuous.
 
-    Let D_k = Φ̂_X^k(∅). Each unit of D_k is dead relative to X−D_k, by persistence. So by induction on k, σ_∀(D_k) = Φ̂_{σ̂(X)}^k(∅), starting from σ_∀(∅) = ∅. Hence D*(σ̂(X)) = σ_∀(D*(X)).
+    Hence σ̂(T) is normal and σ(T) = σ̂(T). Compatibility is checked on T's closure, and all of that closure is retained. So no raw step depends on a dead entry, and no raw transport is taken that normalization would have made legal.
   - *Closures transport.* ρ(Cl_f(G)) = Cl_{f̄}(ρ(G)) (case 5). By induction on nesting depth, inner descriptors first, recomputing a closure after a raw step gives the transported closure.
 
-  Hence nf(σ̂(X)) = σ̂(X)−σ_∀(D*(X)) = σ̂(nf(X)) up to renaming. Applied to nf(X), this shows that the right side is already normal, so nf∘σ̂ = nf∘σ̂∘nf. So ρ(μ(T)) = nf(ρ̂(nf(μ̂(T)))) = nf(ρ̂(μ̂(T))) = nf((ρ∘μ)^(T)) = (ρ∘μ)(T).
+  So, up to renaming, ρ(μ(T)) = ρ̂(μ̂(T)) = (ρ∘μ)^(T) = (ρ∘μ)(T). Observed expressions are normal. Terms are normalized by definition (C.1), and a retained subexpression of a normal expression is normal, since vacuity is local to a binder's body and closures are computed from the descriptor's own text.
 - **(F3) Instances.** Let ω be safe for N over z.B, and let d pass N+ against the names and the other free parameter values of ρ_ω(B). Let ι send z to a parameter name n_d, and let ω_d extend ω by z ↦ n_d. Then ι(ρ_ω(B)) is map-admissible and equals ρ_{ω_d}(B), the direct transform of B at ω_d. So ω_d is safe for B.
 
   *Proof.* ρ_ω(B) is map-admissible (F1). Every identity of a closure inside it is of one of four kinds:
